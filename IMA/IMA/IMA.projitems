@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>87da9b81-6548-40a3-8a45-3a486fe31953</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>IMA</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)src\ICompressorAlgorithm.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\IDevice\DeviceOrientations.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\IDevice\IDisplay.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\IDevice\IPicturePicker.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\IDevice\TouchActionEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\IDevice\TouchActionEventHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\IDevice\TouchActionType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\IDevice\TouchEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\ImageActionTools.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\ImageUtility.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\MainPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\ModelExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\MovementInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Sender.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\UtilityFunctions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)media\bello.jpg" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)media\mare.jpg" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)media\prova.jpg" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)media\rectangleArea.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)media\sea.jpg" />
+  </ItemGroup>
+</Project>

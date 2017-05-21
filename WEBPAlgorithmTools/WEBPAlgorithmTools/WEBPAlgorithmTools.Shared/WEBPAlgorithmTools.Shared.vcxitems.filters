@@ -1,0 +1,944 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)WEBPAlgorithmTools.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\examples\cwebp.h">
+      <Filter>src\cwebp\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\examples\example_util.h">
+      <Filter>src\exampleutil\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\examples\stopwatch.h">
+      <Filter>src\exampleutil\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\imageio\jpegdec.h">
+      <Filter>src\imagedec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\imageio\metadata.h">
+      <Filter>src\imagedec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\imageio\pngdec.h">
+      <Filter>src\imagedec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\imageio\pnmdec.h">
+      <Filter>src\imagedec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\imageio\tiffdec.h">
+      <Filter>src\imagedec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\imageio\webpdec.h">
+      <Filter>src\imagedec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\imageio\wicdec.h">
+      <Filter>src\imagedec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\imageio\image_dec.h">
+      <Filter>src\imagedec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\imageio\image_enc.h">
+      <Filter>src\imageenc\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\imageio\imageio_util.h">
+      <Filter>src\imageioutil\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\dec\vp8_dec.h">
+      <Filter>src\webpdecode\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\dec\vp8i_dec.h">
+      <Filter>src\webpdecode\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\dec\vp8li_dec.h">
+      <Filter>src\webpdecode\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\dec\webpi_dec.h">
+      <Filter>src\webpdecode\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\dec\alphai_dec.h">
+      <Filter>src\webpdecode\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\dec\common_dec.h">
+      <Filter>src\webpdecode\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\dsp\lossless.h">
+      <Filter>src\webpdsp\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\dsp\lossless_common.h">
+      <Filter>src\webpdsp\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\dsp\mips_macro.h">
+      <Filter>src\webpdsp\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\dsp\msa_macro.h">
+      <Filter>src\webpdsp\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\dsp\neon.h">
+      <Filter>src\webpdsp\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\dsp\yuv.h">
+      <Filter>src\webpdsp\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\dsp\common_sse2.h">
+      <Filter>src\webpdsp\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\dsp\dsp.h">
+      <Filter>src\webpdsp\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\enc\histogram_enc.h">
+      <Filter>src\webpencode\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\enc\vp8i_enc.h">
+      <Filter>src\webpencode\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\enc\vp8li_enc.h">
+      <Filter>src\webpencode\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\enc\backward_references_enc.h">
+      <Filter>src\webpencode\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\enc\cost_enc.h">
+      <Filter>src\webpencode\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\enc\delta_palettization_enc.h">
+      <Filter>src\webpencode\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\utils\thread_utils.h">
+      <Filter>src\webputils\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\utils\utils.h">
+      <Filter>src\webputils\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\utils\bit_reader_inl_utils.h">
+      <Filter>src\webputils\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\utils\bit_reader_utils.h">
+      <Filter>src\webputils\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\utils\bit_writer_utils.h">
+      <Filter>src\webputils\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\utils\color_cache_utils.h">
+      <Filter>src\webputils\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\utils\endian_inl_utils.h">
+      <Filter>src\webputils\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\utils\filters_utils.h">
+      <Filter>src\webputils\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\utils\huffman_encode_utils.h">
+      <Filter>src\webputils\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\utils\huffman_utils.h">
+      <Filter>src\webputils\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\utils\quant_levels_dec_utils.h">
+      <Filter>src\webputils\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\utils\quant_levels_utils.h">
+      <Filter>src\webputils\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\utils\random_utils.h">
+      <Filter>src\webputils\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\utils\rescaler_utils.h">
+      <Filter>src\webputils\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\utils\cpu-features.h">
+      <Filter>src\webputils\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jmemsys.h">
+      <Filter>src\jpegcodec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jmorecfg.h">
+      <Filter>src\jpegcodec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jpegint.h">
+      <Filter>src\jpegcodec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jpeglib.h">
+      <Filter>src\jpegcodec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jversion.h">
+      <Filter>src\jpegcodec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jconfig.h">
+      <Filter>src\jpegcodec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jdct.h">
+      <Filter>src\jpegcodec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jerror.h">
+      <Filter>src\jpegcodec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jinclude.h">
+      <Filter>src\jpegcodec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\lib\libpng\png.h">
+      <Filter>src\pngcodec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\lib\libpng\pngconf.h">
+      <Filter>src\pngcodec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\lib\zlib\inflate.h">
+      <Filter>src\zlibcodec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\lib\zlib\inftrees.h">
+      <Filter>src\zlibcodec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\lib\zlib\trees.h">
+      <Filter>src\zlibcodec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\lib\zlib\zutil.h">
+      <Filter>src\zlibcodec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\lib\zlib\crc32.h">
+      <Filter>src\zlibcodec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\lib\zlib\deflate.h">
+      <Filter>src\zlibcodec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\lib\zlib\inffast.h">
+      <Filter>src\zlibcodec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\lib\zlib\zconf.h">
+      <Filter>src\zlibcodec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\lib\zlib\zlib.h">
+      <Filter>src\zlibcodec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\lib\zlib\inffixed.h">
+      <Filter>src\zlibcodec\header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\src\lib\zlib\gzguts.h">
+      <Filter>src\zlibcodec\header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\examples\cwebp.c">
+      <Filter>src\cwebp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\examples\dwebp.c">
+      <Filter>src\dwebp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\examples\example_util.c">
+      <Filter>src\exampleutil\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\imageio\webpdec.c">
+      <Filter>src\imagedec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\imageio\wicdec.c">
+      <Filter>src\imagedec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\imageio\image_dec.c">
+      <Filter>src\imagedec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\imageio\metadata.c">
+      <Filter>src\imagedec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\imageio\pngdec.c">
+      <Filter>src\imagedec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\imageio\pnmdec.c">
+      <Filter>src\imagedec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\imageio\tiffdec.c">
+      <Filter>src\imagedec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\imageio\jpegdec.c">
+      <Filter>src\imagedec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\imageio\image_enc.c">
+      <Filter>src\imageenc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\imageio\imageio_util.c">
+      <Filter>src\imageioutil\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dec\frame_dec.c">
+      <Filter>src\webpdecode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dec\idec_dec.c">
+      <Filter>src\webpdecode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dec\io_dec.c">
+      <Filter>src\webpdecode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dec\quant_dec.c">
+      <Filter>src\webpdecode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dec\tree_dec.c">
+      <Filter>src\webpdecode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dec\vp8_dec.c">
+      <Filter>src\webpdecode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dec\vp8l_dec.c">
+      <Filter>src\webpdecode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dec\webp_dec.c">
+      <Filter>src\webpdecode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dec\alpha_dec.c">
+      <Filter>src\webpdecode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dec\buffer_dec.c">
+      <Filter>src\webpdecode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\yuv_mips32.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\yuv_neon.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\yuv_sse2.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\lossless_enc.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\alpha_processing.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\alpha_processing_mips_dsp_r2.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\alpha_processing_neon.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\alpha_processing_sse2.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\alpha_processing_sse41.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\argb.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\argb_mips_dsp_r2.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\argb_sse2.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\cost.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\cost_mips_dsp_r2.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\cost_mips32.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\cost_sse2.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\cpu.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\dec.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\dec_clip_tables.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\dec_mips_dsp_r2.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\dec_mips32.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\dec_msa.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\dec_neon.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\dec_sse2.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\dec_sse41.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\enc.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\enc_avx2.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\enc_mips_dsp_r2.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\enc_mips32.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\enc_msa.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\enc_neon.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\enc_sse2.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\enc_sse41.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\filters.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\filters_mips_dsp_r2.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\filters_msa.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\filters_neon.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\filters_sse2.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\lossless.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\lossless_enc_mips_dsp_r2.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\lossless_enc_mips32.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\lossless_enc_msa.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\lossless_enc_neon.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\lossless_enc_sse2.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\lossless_enc_sse41.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\lossless_mips_dsp_r2.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\lossless_msa.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\lossless_neon.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\lossless_sse2.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\rescaler.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\rescaler_mips_dsp_r2.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\rescaler_mips32.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\rescaler_msa.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\rescaler_neon.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\rescaler_sse2.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\ssim.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\ssim_sse2.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\upsampling.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\upsampling_mips_dsp_r2.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\upsampling_msa.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\upsampling_neon.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\upsampling_sse2.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\yuv.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\dsp\yuv_mips_dsp_r2.c">
+      <Filter>src\webpdsp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\enc\webp_enc.c">
+      <Filter>src\webpencode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\enc\alpha_enc.c">
+      <Filter>src\webpencode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\enc\analysis_enc.c">
+      <Filter>src\webpencode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\enc\backward_references_enc.c">
+      <Filter>src\webpencode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\enc\config_enc.c">
+      <Filter>src\webpencode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\enc\cost_enc.c">
+      <Filter>src\webpencode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\enc\delta_palettization_enc.c">
+      <Filter>src\webpencode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\enc\filter_enc.c">
+      <Filter>src\webpencode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\enc\frame_enc.c">
+      <Filter>src\webpencode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\enc\histogram_enc.c">
+      <Filter>src\webpencode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\enc\iterator_enc.c">
+      <Filter>src\webpencode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\enc\near_lossless_enc.c">
+      <Filter>src\webpencode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\enc\picture_csp_enc.c">
+      <Filter>src\webpencode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\enc\picture_enc.c">
+      <Filter>src\webpencode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\enc\picture_psnr_enc.c">
+      <Filter>src\webpencode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\enc\picture_rescale_enc.c">
+      <Filter>src\webpencode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\enc\picture_tools_enc.c">
+      <Filter>src\webpencode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\enc\predictor_enc.c">
+      <Filter>src\webpencode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\enc\quant_enc.c">
+      <Filter>src\webpencode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\enc\syntax_enc.c">
+      <Filter>src\webpencode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\enc\token_enc.c">
+      <Filter>src\webpencode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\enc\tree_enc.c">
+      <Filter>src\webpencode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\enc\vp8l_enc.c">
+      <Filter>src\webpencode\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\utils\rescaler_utils.c">
+      <Filter>src\webputils\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\utils\thread_utils.c">
+      <Filter>src\webputils\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\utils\utils.c">
+      <Filter>src\webputils\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\utils\bit_reader_utils.c">
+      <Filter>src\webputils\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\utils\bit_writer_utils.c">
+      <Filter>src\webputils\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\utils\color_cache_utils.c">
+      <Filter>src\webputils\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\utils\filters_utils.c">
+      <Filter>src\webputils\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\utils\huffman_encode_utils.c">
+      <Filter>src\webputils\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\utils\huffman_utils.c">
+      <Filter>src\webputils\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\utils\quant_levels_dec_utils.c">
+      <Filter>src\webputils\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\utils\quant_levels_utils.c">
+      <Filter>src\webputils\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\utils\random_utils.c">
+      <Filter>src\webputils\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)WEBPAlgorithmTools.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jutils.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jaricom.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jcapimin.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jcapistd.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jcarith.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jccoefct.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jccolor.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jcdctmgr.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jchuff.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jcinit.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jcmainct.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jcmarker.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jcmaster.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jcomapi.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jcparam.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jcprepct.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jcsample.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jctrans.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jdapimin.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jdapistd.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jdarith.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jdatadst.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jdatasrc.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jdcoefct.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jdcolor.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jddctmgr.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jdhuff.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jdinput.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jdmainct.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jdmarker.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jdmaster.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jdmerge.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jdpostct.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jdsample.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jdtrans.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jerror.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jfdctflt.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jfdctfst.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jfdctint.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jidctflt.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jidctfst.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jidctint.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jmemmgr.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jmemnobs.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jquant1.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libjpeg\jquant2.c">
+      <Filter>src\jpegcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libpng\png.c">
+      <Filter>src\pngcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libpng\pngvcrd.c">
+      <Filter>src\pngcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libpng\pngwio.c">
+      <Filter>src\pngcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libpng\pngwrite.c">
+      <Filter>src\pngcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libpng\pngwtran.c">
+      <Filter>src\pngcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libpng\pngwutil.c">
+      <Filter>src\pngcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libpng\pngerror.c">
+      <Filter>src\pngcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libpng\pnggccrd.c">
+      <Filter>src\pngcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libpng\pngget.c">
+      <Filter>src\pngcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libpng\pngmem.c">
+      <Filter>src\pngcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libpng\pngpread.c">
+      <Filter>src\pngcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libpng\pngread.c">
+      <Filter>src\pngcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libpng\pngrio.c">
+      <Filter>src\pngcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libpng\pngrtran.c">
+      <Filter>src\pngcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libpng\pngrutil.c">
+      <Filter>src\pngcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libpng\pngset.c">
+      <Filter>src\pngcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libpng\pngtest.c">
+      <Filter>src\pngcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\libpng\pngtrans.c">
+      <Filter>src\pngcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\zlib\gzwrite.c">
+      <Filter>src\zlibcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\zlib\infback.c">
+      <Filter>src\zlibcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\zlib\inffast.c">
+      <Filter>src\zlibcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\zlib\inflate.c">
+      <Filter>src\zlibcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\zlib\inftrees.c">
+      <Filter>src\zlibcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\zlib\trees.c">
+      <Filter>src\zlibcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\zlib\uncompr.c">
+      <Filter>src\zlibcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\zlib\zutil.c">
+      <Filter>src\zlibcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\zlib\adler32.c">
+      <Filter>src\zlibcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\zlib\compress.c">
+      <Filter>src\zlibcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\zlib\crc32.c">
+      <Filter>src\zlibcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\zlib\deflate.c">
+      <Filter>src\zlibcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\zlib\gzclose.c">
+      <Filter>src\zlibcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\zlib\gzlib.c">
+      <Filter>src\zlibcodec\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\src\lib\zlib\gzread.c">
+      <Filter>src\zlibcodec\src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{a9003c47-f4f3-4b48-a22b-496a22725e4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cwebp">
+      <UniqueIdentifier>{096d036e-e7c2-4017-8d0e-f0de8641591a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\dwebp">
+      <UniqueIdentifier>{82e95168-0b17-48f0-8d44-5864b3236c50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\exampleutil">
+      <UniqueIdentifier>{c7ddebe1-a491-418d-91df-a6fdce042cde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\imagedec">
+      <UniqueIdentifier>{cff3f726-6b12-460e-af92-717372f23939}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\imageenc">
+      <UniqueIdentifier>{84672b5c-22c9-4957-b81b-b6178ed554b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\webpdecode">
+      <UniqueIdentifier>{37ee2f8c-ec5a-49b6-9190-e7b3e89342c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\webputils">
+      <UniqueIdentifier>{9eb47323-e0cc-41ea-872f-b09960b91f0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cwebp\header">
+      <UniqueIdentifier>{9964fb52-eaaf-46b0-8532-46395b1e3d4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cwebp\src">
+      <UniqueIdentifier>{aa26d9d5-55f7-4e6e-a638-19507501f0fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\dwebp\header">
+      <UniqueIdentifier>{ec764e47-4632-4b73-97ee-d624450342b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\dwebp\src">
+      <UniqueIdentifier>{f53d6413-e51b-4130-8834-1750ee1407ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\exampleutil\header">
+      <UniqueIdentifier>{060dffcd-1457-4160-be35-94c004ef0f0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\exampleutil\src">
+      <UniqueIdentifier>{cd3c74d0-f88e-42fc-af6f-2f273b5cf709}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\imagedec\header">
+      <UniqueIdentifier>{2d1bc013-8bd2-44a9-9147-8a4f0c644877}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\imagedec\src">
+      <UniqueIdentifier>{ab50a283-8625-4c76-a6c5-8ccd8bd039b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\imageenc\header">
+      <UniqueIdentifier>{83cbba02-852d-4819-8c14-713052e451d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\imageenc\src">
+      <UniqueIdentifier>{9a195155-fead-4f33-a0de-f6f88f23ed65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\webputils\header">
+      <UniqueIdentifier>{c772c9ab-97c3-478c-954c-7c1e33f9f22b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\webputils\src">
+      <UniqueIdentifier>{859c7f65-4749-4d34-9361-7ce487658328}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\webpdecode\header">
+      <UniqueIdentifier>{7613ec08-fce6-458e-ba5f-a4b43d0ce744}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\webpdecode\src">
+      <UniqueIdentifier>{798c380d-da1a-4013-8287-3fb2e3aa8bfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\webpencode">
+      <UniqueIdentifier>{61393112-52b0-4d7e-8e99-5d7f070ee963}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\imageioutil">
+      <UniqueIdentifier>{d33c861e-2bfc-4251-a417-e01297ede3a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\imageioutil\header">
+      <UniqueIdentifier>{f276fbd3-f6ec-4996-b9a0-f97ab7d2c819}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\imageioutil\src">
+      <UniqueIdentifier>{c42ee263-3e53-4391-bbfa-fe5f69199e14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\webpencode\src">
+      <UniqueIdentifier>{c7be841b-4070-4826-ba28-b444ad3ffd4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\webpencode\header">
+      <UniqueIdentifier>{f5d0f682-4266-4ebe-833c-4d7b7231c441}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\webpdsp">
+      <UniqueIdentifier>{a3c5d68b-b39d-43f7-94d9-a11dfdfdf439}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\webpdsp\header">
+      <UniqueIdentifier>{bc3e4898-0839-4794-8705-67b7849aebe5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\webpdsp\src">
+      <UniqueIdentifier>{9e82610f-04cf-4539-87df-c010e4126f61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\jpegcodec">
+      <UniqueIdentifier>{9110ee52-80d2-4d2d-a8f1-990a8717a7bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\jpegcodec\src">
+      <UniqueIdentifier>{c52dd1b1-de3f-4eda-a348-ae83c672b0f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\jpegcodec\header">
+      <UniqueIdentifier>{01e3beb4-99a8-4ed8-82b8-0f1aa4c93100}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\pngcodec">
+      <UniqueIdentifier>{db3d89b7-8ed4-4fd1-86ca-83c98593ec46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\pngcodec\header">
+      <UniqueIdentifier>{5f8b7806-9548-4174-8d21-0a0963a4ffef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\pngcodec\src">
+      <UniqueIdentifier>{a265861e-4d5d-4faf-813c-7e28841bab99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\zlibcodec">
+      <UniqueIdentifier>{0315da9f-74a5-4bfd-bb07-83e5cbf3d299}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\zlibcodec\src">
+      <UniqueIdentifier>{fce14f40-017d-4548-9e7f-1e4779226d4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\zlibcodec\header">
+      <UniqueIdentifier>{1a6bca85-44fb-4ae9-a452-f8d67433040b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
