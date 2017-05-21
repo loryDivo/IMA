@@ -4,6 +4,8 @@ using SkiaSharp.Views.Forms;
 using System;
 using TouchTracking;
 using Xamarin.Forms;
+using System.Collections.Generic;
+
 namespace IMA
 {
     public class ImageActionTools : ContentPage
@@ -21,9 +23,9 @@ namespace IMA
         private float leftBitMapImg;
         private float rightBitMapImg;
         private SKRect rectangleBitMapImg;
-        private float radiousOfCircleRect = 20;
         private SKPaint paintResizeRectSelectionArea;
 
+        private float radiousOfCircleRect = 20;
         private float topRect;
         private float bottomRect;
         private float leftRect;
@@ -37,6 +39,7 @@ namespace IMA
         private TouchEffect touchEffect;
         private PinchGestureRecognizer pinchGesture;
         private PanGestureRecognizer panGesture;
+        private List<long> touchId;
 
         private float prevRatio;
         private float aspectRatio;
@@ -69,6 +72,7 @@ namespace IMA
 
         private void InizializeComponent(SKBitmap bitMap)
         {
+            touchId = new List<long>();
             this.gridLayout = new Grid();
             this.bitMapDirectorySource = DependencyService.Get<IPicturePicker>().GetImageRealPath();
             this.bitMap = bitMap;
@@ -343,18 +347,29 @@ namespace IMA
             {
 
                 case TouchActionType.Pressed:
-
+                    if (!touchId.Contains(args.Id)){
+                        touchId.Add(args.Id);
+                    }
                     break;
 
                 case TouchActionType.Moved:
-                    resizeInfo = CheckIfResize(args.Location);
-                    if (resizeInfo != ResizeInfo.none)
+                    if (touchId.Contains(args.Id))
                     {
-                        ResizeRect(coordinatePixelDetected, resizeInfo);
+                        resizeInfo = CheckIfResize(args.Location);
+                        if (resizeInfo != ResizeInfo.none)
+                        {
+                            ResizeRect(coordinatePixelDetected, resizeInfo);
+                        }
+                        else
+                        {
+                            RectangleMoveArea(args.Location);
+                        }
                     }
-                    else
+                    break;
+                case TouchActionType.Released:
+                    if (touchId.Contains(args.Id))
                     {
-                        RectangleMoveArea(args.Location);
+                        touchId.Remove(args.Id);
                     }
                     break;
             }
