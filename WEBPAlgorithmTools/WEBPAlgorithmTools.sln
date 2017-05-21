@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WEBPAlgorithmTools.Shared", "WEBPAlgorithmTools\WEBPAlgorithmTools.Shared\WEBPAlgorithmTools.Shared.vcxitems", "{63429EAC-949E-48B0-AAA5-0BB821302E58}"
 EndProject
@@ -9,9 +9,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WEBPAlgorithmTools.Android"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WEBPAlgorithmTools.iOS", "WEBPAlgorithmTools\WEBPAlgorithmTools.iOS\WEBPAlgorithmTools.iOS.vcxproj", "{DEB6B4A7-70DC-48CA-B9C9-226F0FCC1256}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WEPAlgorithmTools.UWP", "WEBPAlgorithmTools\WEPAlgorithmTools.UWP\WEPAlgorithmTools.UWP.vcxproj", "{6CE7CCAE-06D5-4392-842B-5C142AC85E0F}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		WEBPAlgorithmTools\WEBPAlgorithmTools.Shared\WEBPAlgorithmTools.Shared.vcxitems*{63429eac-949e-48b0-aaa5-0bb821302e58}*SharedItemsImports = 9
+		WEBPAlgorithmTools\WEBPAlgorithmTools.Shared\WEBPAlgorithmTools.Shared.vcxitems*{6ce7ccae-06d5-4392-842b-5c142ac85e0f}*SharedItemsImports = 4
 		WEBPAlgorithmTools\WEBPAlgorithmTools.Shared\WEBPAlgorithmTools.Shared.vcxitems*{d53e6913-b612-4cb0-b6a6-2309c3e26566}*SharedItemsImports = 4
 		WEBPAlgorithmTools\WEBPAlgorithmTools.Shared\WEBPAlgorithmTools.Shared.vcxitems*{deb6b4a7-70dc-48ca-b9c9-226f0fcc1256}*SharedItemsImports = 4
 	EndGlobalSection
@@ -58,6 +61,20 @@ Global
 		{DEB6B4A7-70DC-48CA-B9C9-226F0FCC1256}.Release|x64.Build.0 = Release|x64
 		{DEB6B4A7-70DC-48CA-B9C9-226F0FCC1256}.Release|x86.ActiveCfg = Release|x86
 		{DEB6B4A7-70DC-48CA-B9C9-226F0FCC1256}.Release|x86.Build.0 = Release|x86
+		{6CE7CCAE-06D5-4392-842B-5C142AC85E0F}.Debug|ARM.ActiveCfg = Debug|ARM
+		{6CE7CCAE-06D5-4392-842B-5C142AC85E0F}.Debug|ARM.Build.0 = Debug|ARM
+		{6CE7CCAE-06D5-4392-842B-5C142AC85E0F}.Debug|ARM64.ActiveCfg = Debug|Win32
+		{6CE7CCAE-06D5-4392-842B-5C142AC85E0F}.Debug|x64.ActiveCfg = Debug|x64
+		{6CE7CCAE-06D5-4392-842B-5C142AC85E0F}.Debug|x64.Build.0 = Debug|x64
+		{6CE7CCAE-06D5-4392-842B-5C142AC85E0F}.Debug|x86.ActiveCfg = Debug|Win32
+		{6CE7CCAE-06D5-4392-842B-5C142AC85E0F}.Debug|x86.Build.0 = Debug|Win32
+		{6CE7CCAE-06D5-4392-842B-5C142AC85E0F}.Release|ARM.ActiveCfg = Release|ARM
+		{6CE7CCAE-06D5-4392-842B-5C142AC85E0F}.Release|ARM.Build.0 = Release|ARM
+		{6CE7CCAE-06D5-4392-842B-5C142AC85E0F}.Release|ARM64.ActiveCfg = Release|Win32
+		{6CE7CCAE-06D5-4392-842B-5C142AC85E0F}.Release|x64.ActiveCfg = Release|x64
+		{6CE7CCAE-06D5-4392-842B-5C142AC85E0F}.Release|x64.Build.0 = Release|x64
+		{6CE7CCAE-06D5-4392-842B-5C142AC85E0F}.Release|x86.ActiveCfg = Release|Win32
+		{6CE7CCAE-06D5-4392-842B-5C142AC85E0F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

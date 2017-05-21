@@ -2,7 +2,7 @@
 #include "../../examples/cwebp.h"
 
 	int WEBPEncode_internal(const char * imageSource, const char * imageDestination) {
-		char ** string;
+		char ** string = NULL;
 		string[0] = "cwebp";
 		string[1] = imageSource;
 		string[2] = "-o";
