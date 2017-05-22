@@ -14,7 +14,7 @@ namespace IMA.UWP
             result = WEBPCompressorAlgorithm(imageSource, imageDestination);
             return result;
         }
-        [DllImport("WEPAlgorithmTools.UWP.dll", EntryPoint = "WEBPEncode")]
+        [DllImport("WEPAlgorithmTools.UWP.dll", EntryPoint = "WEBPEncode", CallingConvention = CallingConvention.Cdecl)]
 
         public static extern int WEBPCompressorAlgorithm(string imageSource, string imageDestination);
     }

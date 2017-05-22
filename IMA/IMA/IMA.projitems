@@ -12,6 +12,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)src\BitMapArea.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Display.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\ICompressorAlgorithm.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\IDevice\DeviceOrientations.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\IDevice\IDisplay.cs" />
@@ -25,6 +27,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)src\MainPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\ModelExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\MovementInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\RectangleArea.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\Sender.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\UtilityFunctions.cs" />
   </ItemGroup>

@@ -5,55 +5,30 @@ using System;
 using TouchTracking;
 using Xamarin.Forms;
 using System.Collections.Generic;
+using IMA.src;
 
 namespace IMA
 {
     public class ImageActionTools : ContentPage
     {
         
-        private Boolean drawRectArea = false;
+
+        private Display display;
         private Grid gridLayout;
-        private SKCanvasView canvasBitMap;
-        private SKBitmap bitMap;
-        private string bitMapDirectorySource;
 
-
-        private float topBitMapImg;
-        private float bottomBitMapImg;
-        private float leftBitMapImg;
-        private float rightBitMapImg;
+        private BitMapArea bitMapArea;
         private SKRect rectangleBitMapImg;
         private SKPaint paintResizeRectSelectionArea;
+        private SKCanvasView canvasBitMap;
 
-        private float radiousOfCircleRect = 20;
-        private float topRect;
-        private float bottomRect;
-        private float leftRect;
-        private float rightRect;
-        private float offSetRectWidth = 100;
-        private float offSetRectHeight = 100;
+        private RectangleArea rectangleArea;
         private SKRect rectSelectionArea;
         private SKPaint paintRectSelectionArea;
-        private Boolean panMove = false;
-        private Boolean resizeMove = false;
+
         private TouchEffect touchEffect;
+        private List<long> touchId;
         private PinchGestureRecognizer pinchGesture;
         private PanGestureRecognizer panGesture;
-        private List<long> touchId;
-
-        private float prevRatio;
-        private float aspectRatio;
-        private float scaleWidth;
-        private float scaleHeight;
-
-        private SKPoint leftTopCoordinatePixelRect;
-        private SKPoint leftBottomCoordinatePixelRect;
-        private SKPoint rightTopCoordinatePixelRect;
-        private SKPoint rightBottomCoordinatePixelRect;
-        private SKPoint oneRadiousCoordinatePixel;
-        private SKPoint coordinatePixelDetected;
-
-        private ResizeInfo resizeInfo;
 
         //PINCH
         private const double MIN_SCALE = 1;
@@ -72,27 +47,30 @@ namespace IMA
 
         private void InizializeComponent(SKBitmap bitMap)
         {
-            touchId = new List<long>();
-            this.gridLayout = new Grid();
-            this.bitMapDirectorySource = DependencyService.Get<IPicturePicker>().GetImageRealPath();
-            this.bitMap = bitMap;
+            display = new Display();
+            gridLayout = new Grid();
 
-            rectangleBitMapImg = new SKRect();
+            bitMapArea = new BitMapArea(bitMap);
+            canvasBitMap = new SKCanvasView();
+            canvasBitMap.PaintSurface += OnCanvasViewBitMapImgSurface;
+
+            rectangleArea = new RectangleArea();
 
             Scale = MIN_SCALE;
             TranslationX = TranslationY = 0;
             AnchorX = AnchorY = 0;
 
-            canvasBitMap = new SKCanvasView();
-            canvasBitMap.PaintSurface += OnCanvasViewBitMapImgSurface;
 
             pinchGesture = new PinchGestureRecognizer();
             pinchGesture.PinchUpdated += OnPinchUpdated;
             gridLayout.GestureRecognizers.Add(pinchGesture);
+
             panGesture = new PanGestureRecognizer();
             panGesture.PanUpdated += OnPanUpdated;
             gridLayout.GestureRecognizers.Add(panGesture);
+
             gridLayout.Children.Add(canvasBitMap);
+
             Content = gridLayout;
 
         }
@@ -185,28 +163,28 @@ namespace IMA
 
             canvas.Clear();
 
-            aspectRatio = Math.Min((float)info.Width / bitMap.Width,
-                        (float)info.Height / bitMap.Height);
+            display.AspectRatio = Math.Min((float)info.Width / bitMapArea.BitMap.Width,
+                        (float)info.Height / bitMapArea.BitMap.Height);
 
-            scaleHeight = info.Height / rectangleBitMapImg.Height;
-            scaleWidth = info.Width / rectangleBitMapImg.Width;
+            display.ScaleHeight = info.Height / rectangleBitMapImg.Height;
+            display.ScaleWidth = info.Width / rectangleBitMapImg.Width;
 
             GetBitMapSize(info);
-            rectangleBitMapImg = new SKRect(leftBitMapImg, topBitMapImg, rightBitMapImg, bottomBitMapImg);
-            canvas.DrawBitmap(bitMap, rectangleBitMapImg);
+            rectangleBitMapImg = new SKRect(bitMapArea.LeftBitMapImg, bitMapArea.TopBitMapImg, bitMapArea.RightBitMapImg, bitMapArea.BottomBitMapImg);
+            canvas.DrawBitmap(bitMapArea.BitMap, rectangleBitMapImg);
 
             if (!DisplayChange(canvas))
             {
-                if (drawRectArea && !panMove && !resizeMove)
+                if (rectangleArea.DrawRectArea && !rectangleArea.PanMove && !rectangleArea.ResizeMove)
                 {
                     canvas.DrawRect(rectSelectionArea, paintRectSelectionArea);
                 }
-                else if (drawRectArea && panMove && !resizeMove)
+                else if (rectangleArea.DrawRectArea && rectangleArea.PanMove && !rectangleArea.ResizeMove)
                 {
                     canvas.DrawRect(rectSelectionArea, paintRectSelectionArea);
-                    panMove = false;
+                    rectangleArea.PanMove = false;
                 }
-                else if (drawRectArea && resizeMove && !panMove)
+                else if (rectangleArea.DrawRectArea && rectangleArea.ResizeMove && !rectangleArea.PanMove)
                 {
                     paintResizeRectSelectionArea = new SKPaint
                     {
@@ -215,33 +193,33 @@ namespace IMA
                         Color = SKColors.LightSkyBlue,
                     };
                     canvas.DrawRect(rectSelectionArea, paintRectSelectionArea);
-                    canvas.DrawCircle(leftRect, topRect, radiousOfCircleRect, paintResizeRectSelectionArea);
-                    canvas.DrawCircle(leftRect, bottomRect, radiousOfCircleRect, paintResizeRectSelectionArea);
-                    canvas.DrawCircle(rightRect, topRect, radiousOfCircleRect, paintResizeRectSelectionArea);
-                    canvas.DrawCircle(rightRect, bottomRect, radiousOfCircleRect, paintResizeRectSelectionArea);
-                    resizeMove = false;
+                    canvas.DrawCircle(rectangleArea.LeftRect, rectangleArea.TopRect, rectangleArea.RadiousOfCircleRect, paintResizeRectSelectionArea);
+                    canvas.DrawCircle(rectangleArea.LeftRect, rectangleArea.BottomRect, rectangleArea.RadiousOfCircleRect, paintResizeRectSelectionArea);
+                    canvas.DrawCircle(rectangleArea.RightRect, rectangleArea.TopRect, rectangleArea.RadiousOfCircleRect, paintResizeRectSelectionArea);
+                    canvas.DrawCircle(rectangleArea.RightRect, rectangleArea.BottomRect, rectangleArea.RadiousOfCircleRect, paintResizeRectSelectionArea);
+                    rectangleArea.ResizeMove = false;
                 }
             }
         }
 
         private Boolean DisplayChange(SKCanvas canvas)
         {
-            if (prevRatio == 0)
+            if (display.PrevRatio == 0)
             {
-                prevRatio = aspectRatio;
-                if (drawRectArea && !panMove && !resizeMove)
+                display.PrevRatio = display.AspectRatio;
+                if (rectangleArea.DrawRectArea && !rectangleArea.PanMove && !rectangleArea.ResizeMove)
                 {
                     DrawRectArea(canvas, true);
                 }
                 return true;
             }
-            else if (aspectRatio != prevRatio)
+            else if (display.AspectRatio != display.PrevRatio)
             {
-                if (drawRectArea && !panMove && !resizeMove)
+                if (rectangleArea.DrawRectArea && !rectangleArea.PanMove && !rectangleArea.ResizeMove)
                 {
                     DrawRectArea(canvas, false);
                 }
-                prevRatio = aspectRatio;
+                display.PrevRatio = display.AspectRatio;
                 return true;
             }
             return false;
@@ -249,30 +227,30 @@ namespace IMA
 
         private void GetBitMapSize(SKImageInfo info)
         {
-            leftBitMapImg = (info.Width - aspectRatio * bitMap.Width) / 2;
-            topBitMapImg = (info.Height - aspectRatio * bitMap.Height) / 2;
-            rightBitMapImg = leftBitMapImg + aspectRatio * bitMap.Width;
-            bottomBitMapImg = topBitMapImg + aspectRatio * bitMap.Height;
+            bitMapArea.LeftBitMapImg = (info.Width - display.AspectRatio * bitMapArea.BitMap.Width) / 2;
+            bitMapArea.TopBitMapImg = (info.Height - display.AspectRatio * bitMapArea.BitMap.Height) / 2;
+            bitMapArea.RightBitMapImg = bitMapArea.LeftBitMapImg + display.AspectRatio * bitMapArea.BitMap.Width;
+            bitMapArea.BottomBitMapImg = bitMapArea.TopBitMapImg + display.AspectRatio * bitMapArea.BitMap.Height;
         }
 
         private void DrawRectArea(SKCanvas canvas, Boolean defaultRectPosition)
         {
             if (defaultRectPosition)
             {
-                topRect = topBitMapImg;
-                leftRect = leftBitMapImg;
+                rectangleArea.TopRect = bitMapArea.TopBitMapImg;
+                rectangleArea.LeftRect = bitMapArea.LeftBitMapImg;
             }
             else
             {
-                offSetRectHeight = (bottomRect - topRect) * scaleHeight;
-                offSetRectWidth = (rightRect - leftRect) * scaleWidth;
-                topRect = offSetRectHeight + topRect;
-                leftRect = offSetRectWidth + leftRect;
+                rectangleArea.OffSetRectHeight = (rectangleArea.BottomRect - rectangleArea.TopRect) * display.ScaleHeight;
+                rectangleArea.OffSetRectWidth = (rectangleArea.RightRect - rectangleArea.LeftRect) * display.ScaleWidth;
+                rectangleArea.TopRect = rectangleArea.OffSetRectHeight + rectangleArea.TopRect;
+                rectangleArea.LeftRect = rectangleArea.OffSetRectWidth + rectangleArea.LeftRect;
             }
-            rightRect = leftRect + offSetRectWidth;
-            bottomRect = topRect + offSetRectHeight;
+            rectangleArea.RightRect = rectangleArea.LeftRect + rectangleArea.OffSetRectWidth;
+            rectangleArea.BottomRect = rectangleArea.TopRect + rectangleArea.OffSetRectHeight;
 
-            rectSelectionArea = new SKRect(leftRect, topRect, rightRect, bottomRect);
+            rectSelectionArea = new SKRect(rectangleArea.LeftRect, rectangleArea.TopRect, rectangleArea.RightRect, rectangleArea.BottomRect);
             canvas.DrawRect(rectSelectionArea, paintRectSelectionArea);
         }
 
@@ -286,13 +264,13 @@ namespace IMA
         {
             Rectangle rectCoordinate;
             rectCoordinate = DeterminateRectCoordinate();
-            Navigation.PushAsync(new Sender(this, bitMapDirectorySource, rectCoordinate));
+            Navigation.PushAsync(new Sender(this, bitMapArea.BitMapDirectorySource, rectCoordinate));
             
         }
 
         private Rectangle DeterminateRectCoordinate()
         {
-            if (drawRectArea)
+            if (rectangleArea.DrawRectArea)
             {
                 return new Rectangle();
                 // determina cordinate
@@ -306,15 +284,15 @@ namespace IMA
 
         private void ShowRectangleIntoImageArea()
         {
-            if (!drawRectArea)
+            if (!rectangleArea.DrawRectArea)
             {
 
-                topRect = topBitMapImg;
-                leftRect = leftBitMapImg;
-                rightRect = leftRect + offSetRectWidth;
-                bottomRect = topRect + offSetRectHeight;
+                rectangleArea.TopRect = bitMapArea.TopBitMapImg;
+                rectangleArea.LeftRect = bitMapArea.LeftBitMapImg;
+                rectangleArea.RightRect = rectangleArea.LeftRect + rectangleArea.OffSetRectWidth;
+                rectangleArea.BottomRect = rectangleArea.TopRect + rectangleArea.OffSetRectHeight;
 
-                rectSelectionArea = new SKRect(leftRect, topRect, rightRect, bottomRect);
+                rectSelectionArea = new SKRect(rectangleArea.LeftRect, rectangleArea.TopRect, rectangleArea.RightRect, rectangleArea.BottomRect);
                 paintRectSelectionArea = new SKPaint
                 {
                     Color = SKColors.Black,
@@ -323,8 +301,9 @@ namespace IMA
 
                 };
 
-                drawRectArea = true;
+                rectangleArea.DrawRectArea = true;
 
+                touchId = new List<long>();
                 touchEffect = new TouchEffect();
                 touchEffect.TouchAction += OnTouchEffectAction;
                 gridLayout.Effects.Add(touchEffect);
@@ -336,7 +315,7 @@ namespace IMA
                 canvasBitMap.Effects.Remove(touchEffect);
                 gridLayout.GestureRecognizers.Add(pinchGesture);
                 gridLayout.GestureRecognizers.Add(panGesture);
-                drawRectArea = false;
+                rectangleArea.DrawRectArea = false;
             }
             canvasBitMap.InvalidateSurface();
         }
@@ -355,10 +334,10 @@ namespace IMA
                 case TouchActionType.Moved:
                     if (touchId.Contains(args.Id))
                     {
-                        resizeInfo = CheckIfResize(args.Location);
-                        if (resizeInfo != ResizeInfo.none)
+                        rectangleArea.ResizeInfo = CheckIfResize(args.Location);
+                        if (rectangleArea.ResizeInfo != ResizeInfo.none)
                         {
-                            ResizeRect(coordinatePixelDetected, resizeInfo);
+                            ResizeRect(rectangleArea.CoordinatePixelDetected, rectangleArea.ResizeInfo);
                         }
                         else
                         {
@@ -378,18 +357,18 @@ namespace IMA
         private ResizeInfo CheckIfResize(Point coordinateDetected)
         {
 
-            leftTopCoordinatePixelRect = new SKPoint(leftRect, topRect);
-            rightTopCoordinatePixelRect = new SKPoint(rightRect, topRect);
-            leftBottomCoordinatePixelRect = new SKPoint(leftRect, bottomRect);
-            rightBottomCoordinatePixelRect = new SKPoint(rightRect, bottomRect);
+            rectangleArea.LeftTopCoordinatePixelRect = new SKPoint(rectangleArea.LeftRect, rectangleArea.TopRect);
+            rectangleArea.RightTopCoordinatePixelRect = new SKPoint(rectangleArea.RightRect, rectangleArea.TopRect);
+            rectangleArea.LeftBottomCoordinatePixelRect = new SKPoint(rectangleArea.LeftRect, rectangleArea.BottomRect);
+            rectangleArea.RightBottomCoordinatePixelRect = new SKPoint(rectangleArea.RightRect, rectangleArea.BottomRect);
 
-            oneRadiousCoordinatePixel = new SKPoint(leftRect + radiousOfCircleRect, topRect + radiousOfCircleRect);
+            rectangleArea.OneRadiousCoordinatePixel = new SKPoint(rectangleArea.LeftRect + rectangleArea.RadiousOfCircleRect, rectangleArea.TopRect + rectangleArea.RadiousOfCircleRect);
 
-            coordinatePixelDetected = ConvertToPixel(new Point(coordinateDetected.X, coordinateDetected.Y));
+            rectangleArea.CoordinatePixelDetected = ConvertToPixel(new Point(coordinateDetected.X, coordinateDetected.Y));
 
-            ResizeInfo resizeDetected = MovimentMethods.CheckIfResize(coordinatePixelDetected, oneRadiousCoordinatePixel,
-                                                                     leftTopCoordinatePixelRect, leftBottomCoordinatePixelRect,
-                                                                     rightTopCoordinatePixelRect, rightBottomCoordinatePixelRect);
+            ResizeInfo resizeDetected = MovimentMethods.CheckIfResize(rectangleArea.CoordinatePixelDetected, rectangleArea.OneRadiousCoordinatePixel,
+                                                                     rectangleArea.LeftTopCoordinatePixelRect, rectangleArea.LeftBottomCoordinatePixelRect,
+                                                                     rectangleArea.RightTopCoordinatePixelRect, rectangleArea.RightBottomCoordinatePixelRect);
 
 
             return resizeDetected;
@@ -399,7 +378,7 @@ namespace IMA
         {
 
             MovimentInfo resizeMovimentDetected = MovimentMethods.GetResizeInfo(coordinatePixelDetected.X, coordinatePixelDetected.Y,
-                                                                            leftBitMapImg, topBitMapImg, rightBitMapImg, bottomBitMapImg);
+                                                                            bitMapArea.LeftBitMapImg, bitMapArea.TopBitMapImg, bitMapArea.RightBitMapImg, bitMapArea.BottomBitMapImg);
 
             switch (resizeDetected)
             {
@@ -420,13 +399,13 @@ namespace IMA
                     break;
 
             }
-            rectSelectionArea.Top = topRect;
-            rectSelectionArea.Right = rightRect;
-            rectSelectionArea.Left = leftRect;
-            rectSelectionArea.Bottom = bottomRect;
-            offSetRectHeight = bottomRect - topRect;
-            offSetRectWidth = rightRect - leftRect;
-            resizeMove = true;
+            rectSelectionArea.Top = rectangleArea.TopRect;
+            rectSelectionArea.Right = rectangleArea.RightRect;
+            rectSelectionArea.Left = rectangleArea.LeftRect;
+            rectSelectionArea.Bottom = rectangleArea.BottomRect;
+            rectangleArea.OffSetRectHeight = rectangleArea.BottomRect - rectangleArea.TopRect;
+            rectangleArea.OffSetRectWidth = rectangleArea.RightRect - rectangleArea.LeftRect;
+            rectangleArea.ResizeMove = true;
             canvasBitMap.InvalidateSurface();
         }
 
@@ -436,23 +415,23 @@ namespace IMA
             switch (resizeMovimentDetected)
             {
                 case MovimentInfo.OutSideLeft:
-                    leftRect = leftBitMapImg;
-                    topRect = coordinatePixelDetected.Y;
+                    rectangleArea.LeftRect = bitMapArea.LeftBitMapImg;
+                    rectangleArea.TopRect = coordinatePixelDetected.Y;
                     break;
 
                 case MovimentInfo.OverTop:
-                    topRect = topBitMapImg;
-                    leftRect = coordinatePixelDetected.X;
+                    rectangleArea.TopRect = bitMapArea.TopBitMapImg;
+                    rectangleArea.LeftRect = coordinatePixelDetected.X;
                     break;
 
                 case MovimentInfo.OutSideLeftOverTop:
-                    topRect = topBitMapImg;
-                    leftRect = leftBitMapImg;
+                    rectangleArea.TopRect = bitMapArea.TopBitMapImg;
+                    rectangleArea.LeftRect = bitMapArea.LeftBitMapImg;
                     break;
 
                 case MovimentInfo.InsideArea:
-                    leftRect = coordinatePixelDetected.X;
-                    topRect = coordinatePixelDetected.Y;
+                    rectangleArea.LeftRect = coordinatePixelDetected.X;
+                    rectangleArea.TopRect = coordinatePixelDetected.Y;
                     break;
 
             }
@@ -465,23 +444,23 @@ namespace IMA
             switch (resizeMovimentDetected)
             {
                 case MovimentInfo.OutSideLeft:
-                    leftRect = leftBitMapImg;
-                    bottomRect = coordinatePixelDetected.Y;
+                    rectangleArea.LeftRect = bitMapArea.LeftBitMapImg;
+                    rectangleArea.BottomRect = coordinatePixelDetected.Y;
                     break;
 
                 case MovimentInfo.UnderBottom:
-                    bottomRect = bottomBitMapImg;
-                    leftRect = coordinatePixelDetected.X;
+                    rectangleArea.BottomRect = bitMapArea.BottomBitMapImg;
+                    rectangleArea.LeftRect = coordinatePixelDetected.X;
                     break;
 
                 case MovimentInfo.OutSideLeftUnderBottom:
-                    leftRect = leftBitMapImg;
-                    bottomRect = bottomBitMapImg;
+                    rectangleArea.LeftRect = bitMapArea.LeftBitMapImg;
+                    rectangleArea.BottomRect = bitMapArea.BottomBitMapImg;
                     break;
 
                 case MovimentInfo.InsideArea:
-                    leftRect = coordinatePixelDetected.X;
-                    bottomRect = coordinatePixelDetected.Y;
+                    rectangleArea.LeftRect = coordinatePixelDetected.X;
+                    rectangleArea.BottomRect = coordinatePixelDetected.Y;
                     break;
             }
         }
@@ -491,23 +470,23 @@ namespace IMA
             switch (resizeMovimentDetected)
             {
                 case MovimentInfo.OutSideRight:
-                    rightRect = rightBitMapImg;
-                    topRect = coordinatePixelDetected.Y;
+                    rectangleArea.RightRect = bitMapArea.RightBitMapImg;
+                    rectangleArea.TopRect = coordinatePixelDetected.Y;
                     break;
 
                 case MovimentInfo.OverTop:
-                    topRect = topBitMapImg;
-                    rightRect = coordinatePixelDetected.X;
+                    rectangleArea.TopRect = bitMapArea.TopBitMapImg;
+                    rectangleArea.RightRect = coordinatePixelDetected.X;
                     break;
 
                 case MovimentInfo.OutSideRightOverTop:
-                    rightRect = rightBitMapImg;
-                    topRect = topBitMapImg;
+                    rectangleArea.RightRect = bitMapArea.RightBitMapImg;
+                    rectangleArea.TopRect = bitMapArea.TopBitMapImg;
                     break;
 
                 case MovimentInfo.InsideArea:
-                    rightRect = coordinatePixelDetected.X;
-                    topRect = coordinatePixelDetected.Y;
+                    rectangleArea.RightRect = coordinatePixelDetected.X;
+                    rectangleArea.TopRect = coordinatePixelDetected.Y;
                     break;
             }
         }
@@ -517,23 +496,23 @@ namespace IMA
             switch (resizeMovimentDetected)
             {
                 case MovimentInfo.OutSideRight:
-                    rightRect = rightBitMapImg;
-                    bottomRect = coordinatePixelDetected.Y;
+                    rectangleArea.RightRect = bitMapArea.RightBitMapImg;
+                    rectangleArea.BottomRect = coordinatePixelDetected.Y;
                     break;
 
                 case MovimentInfo.UnderBottom:
-                    bottomRect = bottomBitMapImg;
-                    rightRect = coordinatePixelDetected.X;
+                    rectangleArea.BottomRect = bitMapArea.BottomBitMapImg;
+                    rectangleArea.RightRect = coordinatePixelDetected.X;
                     break;
 
                 case MovimentInfo.OutSideRightOverTop:
-                    rightRect = rightBitMapImg;
-                    bottomRect = bottomBitMapImg;
+                    rectangleArea.RightRect = bitMapArea.RightBitMapImg;
+                    rectangleArea.BottomRect = bitMapArea.BottomBitMapImg;
                     break;
 
                 case MovimentInfo.InsideArea:
-                    rightRect = coordinatePixelDetected.X;
-                    bottomRect = coordinatePixelDetected.Y;
+                    rectangleArea.RightRect = coordinatePixelDetected.X;
+                    rectangleArea.BottomRect = coordinatePixelDetected.Y;
                     break;
             }
         }
@@ -545,89 +524,89 @@ namespace IMA
 
             SKPoint pixelMove = ConvertToPixel(pointMove);
             MovimentInfo actualMoviment = MovimentMethods.GetMovimentInfo(pixelMove.X, pixelMove.Y,
-                                                                          leftBitMapImg, topBitMapImg, rightBitMapImg,
-                                                                          bottomBitMapImg, offSetRectWidth, offSetRectHeight);
+                                                                          bitMapArea.LeftBitMapImg, bitMapArea.TopBitMapImg, bitMapArea.RightBitMapImg,
+                                                                          bitMapArea.BottomBitMapImg, rectangleArea.OffSetRectWidth, rectangleArea.OffSetRectHeight);
 
             switch (actualMoviment)
             {
                 case MovimentInfo.InsideArea:
 
-                    bottomRect = pixelMove.Y + offSetRectHeight / 2;
-                    topRect = bottomRect - offSetRectHeight;
-                    rightRect = pixelMove.X + offSetRectWidth / 2;
-                    leftRect = rightRect - offSetRectWidth;
+                    rectangleArea.BottomRect = pixelMove.Y + rectangleArea.OffSetRectHeight / 2;
+                    rectangleArea.TopRect = rectangleArea.BottomRect - rectangleArea.OffSetRectHeight;
+                    rectangleArea.RightRect = pixelMove.X + rectangleArea.OffSetRectWidth / 2;
+                    rectangleArea.LeftRect = rectangleArea.RightRect - rectangleArea.OffSetRectWidth;
                     break;
 
                 case MovimentInfo.OutSideRightOverTop:
 
-                    bottomRect = topBitMapImg + offSetRectHeight;
-                    topRect = topBitMapImg;
-                    rightRect = rightBitMapImg;
-                    leftRect = rightRect - offSetRectWidth;
+                    rectangleArea.BottomRect = bitMapArea.TopBitMapImg + rectangleArea.OffSetRectHeight;
+                    rectangleArea.TopRect = bitMapArea.TopBitMapImg;
+                    rectangleArea.RightRect = bitMapArea.RightBitMapImg;
+                    rectangleArea.LeftRect = rectangleArea.RightRect - rectangleArea.OffSetRectWidth;
                     break;
 
                 case MovimentInfo.OutSideRight:
-                    bottomRect = pixelMove.Y + offSetRectHeight / 2;
-                    topRect = bottomRect - offSetRectHeight;
-                    rightRect = rightBitMapImg;
-                    leftRect = rightRect - offSetRectWidth;
+                    rectangleArea.BottomRect = pixelMove.Y + rectangleArea.OffSetRectHeight / 2;
+                    rectangleArea.TopRect = rectangleArea.BottomRect - rectangleArea.OffSetRectHeight;
+                    rectangleArea.RightRect = bitMapArea.RightBitMapImg;
+                    rectangleArea.LeftRect = rectangleArea.RightRect - rectangleArea.OffSetRectWidth;
                     break;
 
                 case MovimentInfo.OutSideLeftOverTop:
 
-                    bottomRect = topBitMapImg + offSetRectHeight;
-                    topRect = topBitMapImg;
-                    leftRect = leftBitMapImg;
-                    rightRect = leftBitMapImg + offSetRectWidth;
+                    rectangleArea.BottomRect = bitMapArea.TopBitMapImg + rectangleArea.OffSetRectHeight;
+                    rectangleArea.TopRect = bitMapArea.TopBitMapImg;
+                    rectangleArea.LeftRect = bitMapArea.LeftBitMapImg;
+                    rectangleArea.RightRect = bitMapArea.LeftBitMapImg + rectangleArea.OffSetRectWidth;
                     break;
 
                 case MovimentInfo.OverTop:
 
-                    bottomRect = topBitMapImg + offSetRectHeight;
-                    topRect = topBitMapImg;
-                    rightRect = pixelMove.X + offSetRectWidth / 2;
-                    leftRect = rightRect - offSetRectWidth;
+                    rectangleArea.BottomRect = bitMapArea.TopBitMapImg + rectangleArea.OffSetRectHeight;
+                    rectangleArea.TopRect = bitMapArea.TopBitMapImg;
+                    rectangleArea.RightRect = pixelMove.X + rectangleArea.OffSetRectWidth / 2;
+                    rectangleArea.LeftRect = rectangleArea.RightRect - rectangleArea.OffSetRectWidth;
                     break;
 
                 case MovimentInfo.OutSideLeftUnderBottom:
 
-                    bottomRect = bottomBitMapImg;
-                    topRect = bottomRect - offSetRectHeight;
-                    leftRect = leftBitMapImg;
-                    rightRect = leftBitMapImg + offSetRectWidth;
+                    rectangleArea.BottomRect = bitMapArea.BottomBitMapImg;
+                    rectangleArea.TopRect = rectangleArea.BottomRect - rectangleArea.OffSetRectHeight;
+                    rectangleArea.LeftRect = bitMapArea.LeftBitMapImg;
+                    rectangleArea.RightRect = bitMapArea.LeftBitMapImg + rectangleArea.OffSetRectWidth;
                     break;
 
                 case MovimentInfo.UnderBottom:
 
-                    bottomRect = bottomBitMapImg;
-                    topRect = bottomRect - offSetRectHeight;
-                    rightRect = pixelMove.X + offSetRectWidth / 2;
-                    leftRect = rightRect - offSetRectWidth;
+                    rectangleArea.BottomRect = bitMapArea.BottomBitMapImg;
+                    rectangleArea.TopRect = rectangleArea.BottomRect - rectangleArea.OffSetRectHeight;
+                    rectangleArea.RightRect = pixelMove.X + rectangleArea.OffSetRectWidth / 2;
+                    rectangleArea.LeftRect = rectangleArea.RightRect - rectangleArea.OffSetRectWidth;
                     break;
 
                 case MovimentInfo.OutSideLeft:
 
-                    bottomRect = pixelMove.Y + offSetRectHeight / 2;
-                    topRect = bottomRect - offSetRectHeight;
-                    leftRect = leftBitMapImg;
-                    rightRect = leftBitMapImg + offSetRectWidth;
+                    rectangleArea.BottomRect = pixelMove.Y + rectangleArea.OffSetRectHeight / 2;
+                    rectangleArea.TopRect = rectangleArea.BottomRect - rectangleArea.OffSetRectHeight;
+                    rectangleArea.LeftRect = bitMapArea.LeftBitMapImg;
+                    rectangleArea.RightRect = bitMapArea.LeftBitMapImg + rectangleArea.OffSetRectWidth;
                     break;
 
                 case MovimentInfo.OutSideRightUnderBottom:
 
-                    bottomRect = bottomBitMapImg;
-                    topRect = bottomBitMapImg - offSetRectHeight;
-                    rightRect = rightBitMapImg;
-                    leftRect = rightBitMapImg - offSetRectWidth;
+                    rectangleArea.BottomRect = bitMapArea.BottomBitMapImg;
+                    rectangleArea.TopRect = bitMapArea.BottomBitMapImg - rectangleArea.OffSetRectHeight;
+                    rectangleArea.RightRect = bitMapArea.RightBitMapImg;
+                    rectangleArea.LeftRect = bitMapArea.RightBitMapImg - rectangleArea.OffSetRectWidth;
                     break;
 
             }
 
-            rectSelectionArea.Top = topRect;
-            rectSelectionArea.Right = rightRect;
-            rectSelectionArea.Left = leftRect;
-            rectSelectionArea.Bottom = bottomRect;
-            panMove = true;
+            rectSelectionArea.Top = rectangleArea.TopRect;
+            rectSelectionArea.Right = rectangleArea.RightRect;
+            rectSelectionArea.Left = rectangleArea.LeftRect;
+            rectSelectionArea.Bottom = rectangleArea.BottomRect;
+            rectangleArea.PanMove = true;
             canvasBitMap.InvalidateSurface();
 
         }
