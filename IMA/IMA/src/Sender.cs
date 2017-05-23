@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using IMA.src;
 using Xamarin.Forms;
 
@@ -11,13 +12,15 @@ namespace IMA
         private static string imageCompressDirectory = defaultTempDirectory + "compress.webp";
 
         private string imageSource;
-        private Rectangle rectCoordinate;
+        private RectangleArea rectangleCoordinate;
+
         private StackLayout senderLayout;
-        public Sender(Page imageActionTools, string imageSource, Rectangle rectangleCoordinate)
+
+        public Sender(Page imageActionTools, string imageSource, RectangleArea rectangleCoordinate)
         {
             Navigation.RemovePage(imageActionTools);
             this.imageSource = imageSource;
-            this.rectCoordinate = rectangleCoordinate;
+            this.rectangleCoordinate = rectangleCoordinate;
             InitializeLayout();
         }
         
@@ -73,10 +76,14 @@ namespace IMA
         private void OnButtonClickProcessImage(object sender, EventArgs e)
         {
             Boolean processComplete = CompressImage();
+            Task userResponse;
             if (!processComplete)
             {
-                DisplayAlert("Errore di compressione", "Vi è stato un errore di compressione", "OK");
-               
+                userResponse = DisplayAlert("Errore di compressione", "Vi è stato un errore di compressione", "OK");
+                if (userResponse.IsCompleted)
+                {
+                    Navigation.RemovePage(this);
+                }
             }
             else
             {
@@ -84,8 +91,7 @@ namespace IMA
                 sendFile = SendFileToServer();
                 if (!sendFile)
                 {
-                    
-                    var userResponse = DisplayAlert("Errore di invio", "Vi è stato un errore di invio", "OK");
+                    userResponse = DisplayAlert("Errore di invio", "Vi è stato un errore di invio", "OK");
                     if (userResponse.IsCompleted)
                     {
                         Navigation.RemovePage(this);
@@ -107,6 +113,7 @@ namespace IMA
 
         private bool SendFileToServer()
         {
+            
             return false;
         }
     }

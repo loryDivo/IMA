@@ -28,6 +28,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)src\ModelExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\MovementInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\RectangleArea.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\RectangleShapeArea.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\Sender.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\UtilityFunctions.cs" />
   </ItemGroup>
