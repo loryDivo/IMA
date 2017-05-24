@@ -50,5 +50,7 @@
     <string>LaunchScreen.storyboard</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Picture Picker uses photo library</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Can we use your camera</string>
   </dict>
 </plist>

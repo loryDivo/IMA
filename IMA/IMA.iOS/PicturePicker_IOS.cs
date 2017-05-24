@@ -14,7 +14,10 @@ namespace IMA.IOS
     {
         TaskCompletionSource<Stream> taskCompletionSource;
         UIImagePickerController imagePicker;
+        private string documentsDirectory = Environment.GetFolderPath
+                        (Environment.SpecialFolder.Personal);
         private string imagePath;
+
         public Task<Stream> GetImageStreamAsync()
         {
             // Create and define UIImagePickerController
@@ -40,14 +43,18 @@ namespace IMA.IOS
 
         void OnImagePickerFinishedPickingMedia(object sender, UIImagePickerMediaPickedEventArgs args)
         {
-            imagePath = DetectFullPath(args.ReferenceUrl.AbsoluteString);
-            
             UIImage image = args.EditedImage ?? args.OriginalImage;
             
             if (image != null)
             {
                 // Convert UIImage to .NET Stream object
                 NSData data = image.AsJPEG(1);
+                imagePath = Path.Combine(documentsDirectory + "/imageSelected.jpg");
+                NSError err = null;
+                if(!data.Save(imagePath, false, out err))
+                {
+                    Console.WriteLine("Errore salvataggio foto temporanea, impossibile proseguire " + " Path " + imagePath);
+                }
                 Stream stream = data.AsStream();
 
                 // Set the Stream as the completion of the Task
@@ -66,17 +73,6 @@ namespace IMA.IOS
             imagePicker.DismissModalViewController(true);
         }
 
-        public string DetectFullPath(string fileName)
-        {
-            //Any old images with a full file path stored should have the front part removed
-            if (fileName.Contains("/"))
-            {
-                fileName = fileName.Substring(fileName.LastIndexOf("/") + 1);
-            }
-            var docsDir = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-
-            return System.IO.Path.Combine(docsDir, fileName);
-        }
         public string GetImageRealPath()
         {
             return imagePath;
