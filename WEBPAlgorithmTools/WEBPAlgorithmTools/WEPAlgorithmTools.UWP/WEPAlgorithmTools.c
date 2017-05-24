@@ -1,5 +1,5 @@
 ﻿#include "WEBPAlgorithmTools.h"
 
-__declspec(dllexport)int WEBPEncode(const char * imageSource, const char * imageDestination) {
+__declspec(dllexport)int WEBPEncode(char * imageSource, char * imageDestination) {
 	return WEBPEncode_internal(imageSource, imageDestination);
 }

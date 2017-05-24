@@ -113,7 +113,6 @@ namespace IMA
 
         private bool SendFileToServer()
         {
-            
             return false;
         }
     }

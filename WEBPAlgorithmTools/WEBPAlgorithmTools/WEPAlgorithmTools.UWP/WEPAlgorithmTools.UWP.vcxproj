@@ -101,7 +101,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <IncludePath>C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\src\lib\zlib;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\src\webp;C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\src\lib\zlib;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <GenerateManifest>false</GenerateManifest>
@@ -127,13 +127,14 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
-      <AdditionalIncludeDirectories>C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\src\lib\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\src\webp;C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\src\lib\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

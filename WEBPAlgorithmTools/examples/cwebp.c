@@ -16,7 +16,6 @@
 //------------------------------------------------------------------------------
 
 #include "cwebp.h"
-
 static int verbose = 0;
 
 static int ReadYUV(const uint8_t* const data, size_t data_size,
