@@ -121,13 +121,11 @@ namespace IMA
             {
                 return false;
             }
-            if (!Send().Equals("200")){
-                return false;
-            };
+            Send();
             return true;
         }
 
-        private async Task<String> Send()
+        private async void Send()
         {
             try
             {
@@ -148,11 +146,11 @@ namespace IMA
                     await client.PostAsync(URLSend, content);
 
                 var responsestr = response.Content.ReadAsStringAsync().Result;
-                return responsestr;
+                
             }
             catch (Exception e)
             {
-                return "404";
+                return;
             }
         }
 
@@ -165,18 +163,30 @@ namespace IMA
                 {
                     fs = File.Create(txtFileDirectory);
                     StreamWriter sw = new StreamWriter(fs);
-                    sw.WriteLine("Coordinae left top " + rectangleCoordinate.ScaleLeftTopPixelCoordinate);
-                    sw.WriteLine("Coordinae left bottom " + rectangleCoordinate.ScaleLeftBottomPixelCoordinate);
-                    sw.WriteLine("Coordinae right top " + rectangleCoordinate.ScaleRightTopPixelCoordinate);
-                    sw.WriteLine("Coordinae right bottom " + rectangleCoordinate.ScaleRightBottomPixelCoordinate);
+                    if (CoordinateRectangleExist())
+                    {
+                        sw.WriteLine("Coordinae left top " + rectangleCoordinate.ScaleLeftTopPixelCoordinate);
+                        sw.WriteLine("Coordinae left bottom " + rectangleCoordinate.ScaleLeftBottomPixelCoordinate);
+                        sw.WriteLine("Coordinae right top " + rectangleCoordinate.ScaleRightTopPixelCoordinate);
+                        sw.WriteLine("Coordinae right bottom " + rectangleCoordinate.ScaleRightBottomPixelCoordinate);
+                    }
+                    else
+                    {
+                        sw.WriteLine("User not select rectangle coordinate");
+                    }
                     sw.Dispose();
                 }
             }
-                catch(Exception e)
+            catch (Exception e)
             {
                 return false;
             }
             return true;
+        }
+
+        private bool CoordinateRectangleExist()
+        {
+            return rectangleCoordinate != null;
         }
 
     }

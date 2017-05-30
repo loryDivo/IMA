@@ -253,19 +253,27 @@ namespace IMA
 
         private void SendFileToCompressor()
         {
-            ScaleRectCoordinate();
-            Navigation.PushAsync(new Sender(this, bitMapArea.BitMapDirectorySource, rectangleArea));
+            if (ScaleRectCoordinate())
+            {
+                Navigation.PushAsync(new Sender(this, bitMapArea.BitMapDirectorySource, rectangleArea));
+            }
+            else
+            {
+                Navigation.PushAsync(new Sender(this, bitMapArea.BitMapDirectorySource, null));
+            }
         }
 
-        private void ScaleRectCoordinate()
+        private bool ScaleRectCoordinate()
         {
             if (rectangleArea.DrawRectArea)
             {
                 rectangleArea.CalculateScaleVertexCoordinate(bitMapArea);
+                return true;
             }
             else
             {
                 DisplayAlert("Nessuna selezione", "Non è stata selezionata nessuna area, il server elaborerà tutta la foto", "OK");
+                return false;
             }
         }
 
