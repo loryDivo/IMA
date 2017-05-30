@@ -1,8 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using IMA.src;
 using Xamarin.Forms;
-
+using System.Net.Http;
 namespace IMA
 {
     public class Sender : ContentPage
@@ -10,6 +11,9 @@ namespace IMA
 
         private static string defaultTempDirectory = System.IO.Path.GetTempPath();
         private static string imageCompressDirectory = defaultTempDirectory + "compress.webp";
+        private string txtFileDirectory = defaultTempDirectory + "coordinate.txt";
+        private static string zipFileDirectory = defaultTempDirectory + "file.zip";
+        private static string URLSend = "http://127.0.0.1:5000/upload";
 
         private string imageSource;
         private RectangleArea rectangleCoordinate;
@@ -113,8 +117,68 @@ namespace IMA
 
         private bool SendFileToServer()
         {
-            return false;
+            if (!CreateTxtFile())
+            {
+                return false;
+            }
+            if (!Send().Equals("200")){
+                return false;
+            };
+            return true;
         }
+
+        private async Task<String> Send()
+        {
+            try
+            {
+
+                var upImageBytes = File.ReadAllBytes(imageCompressDirectory);
+                var upTxtBytes = File.ReadAllBytes(txtFileDirectory);
+
+                HttpClient client = new HttpClient();
+                MultipartFormDataContent content = new MultipartFormDataContent();
+
+                ByteArrayContent imageContent = new ByteArrayContent(upImageBytes);
+                content.Add(imageContent, "image", "image.webp");
+
+                ByteArrayContent txtContent = new ByteArrayContent(upTxtBytes);
+                content.Add(txtContent, "coordinate", "coordinate.txt");
+
+                var response =
+                    await client.PostAsync(URLSend, content);
+
+                var responsestr = response.Content.ReadAsStringAsync().Result;
+                return responsestr;
+            }
+            catch (Exception e)
+            {
+                return "404";
+            }
+        }
+
+        private bool CreateTxtFile()
+        {
+            FileStream fs = null;
+            try
+            {
+                if (!File.Exists(defaultTempDirectory))
+                {
+                    fs = File.Create(txtFileDirectory);
+                    StreamWriter sw = new StreamWriter(fs);
+                    sw.WriteLine("Coordinae left top " + rectangleCoordinate.ScaleLeftTopPixelCoordinate);
+                    sw.WriteLine("Coordinae left bottom " + rectangleCoordinate.ScaleLeftBottomPixelCoordinate);
+                    sw.WriteLine("Coordinae right top " + rectangleCoordinate.ScaleRightTopPixelCoordinate);
+                    sw.WriteLine("Coordinae right bottom " + rectangleCoordinate.ScaleRightBottomPixelCoordinate);
+                    sw.Dispose();
+                }
+            }
+                catch(Exception e)
+            {
+                return false;
+            }
+            return true;
+        }
+
     }
 }
 
