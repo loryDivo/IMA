@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using IMA.src;
 using Xamarin.Forms;
 using System.Net.Http;
+using System.Collections.Generic;
+
 namespace IMA
 {
     public class Sender : ContentPage
@@ -18,6 +20,8 @@ namespace IMA
         private string imageSource;
         private RectangleArea rectangleCoordinate;
 
+        private ListView algorithmList;
+        private Entry qualityAlgorithmEntry;
         private StackLayout senderLayout;
 
         public Sender(Page imageActionTools, string imageSource, RectangleArea rectangleCoordinate)
@@ -58,6 +62,42 @@ namespace IMA
                 HorizontalOptions = LayoutOptions.Center,
             };
 
+            Label algorithmWriterText = new Label
+            {
+                Text = "Select compression algorithm",
+                TextColor = Color.Black,
+                FontSize = 10,
+                VerticalOptions = LayoutOptions.Start,
+                HorizontalOptions = LayoutOptions.Center,
+            };
+
+
+            List<String> algorithmName = new List<String>
+            {
+                "WEBPAlgorithm",
+                "JPEGAlgorithm",
+            };
+
+            algorithmList = new ListView
+            {
+                ItemsSource = algorithmName,
+
+            };
+
+            Label qualityAlgorithmLevelText = new Label
+            {
+                Text = "Write quality of algorithm",
+                TextColor = Color.Black,
+                FontSize = 10,
+                VerticalOptions = LayoutOptions.Start,
+                HorizontalOptions = LayoutOptions.Center,
+            };
+
+            qualityAlgorithmEntry = new Entry
+            {
+                Placeholder = "enter quality"
+            };
+
             Button btnProcessImage = new Button
             {
                 Text = "Process Image",
@@ -71,6 +111,10 @@ namespace IMA
             senderLayout = new StackLayout();
             senderLayout.Children.Add(imageSourceText);
             senderLayout.Children.Add(imageDestinationText);
+            senderLayout.Children.Add(algorithmWriterText);
+            senderLayout.Children.Add(algorithmList);
+            senderLayout.Children.Add(qualityAlgorithmLevelText);
+            senderLayout.Children.Add(qualityAlgorithmEntry);
             senderLayout.Children.Add(btnProcessImage);
 
             Content = senderLayout;
@@ -79,7 +123,7 @@ namespace IMA
 
         private void OnButtonClickProcessImage(object sender, EventArgs e)
         {
-            Boolean processComplete = CompressImage();
+            Boolean processComplete = CompressImage(CompressionAlgorithmSelectedMethods.AlgorithmSelected(algorithmList.SelectedItem), qualityAlgorithmEntry.Text);
             Task userResponse;
             if (!processComplete)
             {
@@ -104,25 +148,48 @@ namespace IMA
             }
         }
 
-        private bool CompressImage()
+        private bool CompressImage(CompressionAlgorithmSelected info, string quality)
         {
-            int result = DependencyService.Get<ICompressorAlgorithm>().CallCompressorAlgorithm(imageSource, imageCompressDirectory);
-            if(result == 0)
+            if (CheckCorrectQualityValue(quality))
             {
-                return true;
+                switch (info)
+                {
+                    case CompressionAlgorithmSelected.WEBPAlgorithm:
+                        int resultWEBP = DependencyService.Get<ICompressorAlgorithm>().CallWEBPCompressorAlgorithm(imageSource, imageCompressDirectory, quality);
+                        if (resultWEBP == 0)
+                        {
+                            return true;
+                        }
+                        return false;
+                    case CompressionAlgorithmSelected.JPEGAlgorithm:
+                        return DependencyService.Get<ICompressorAlgorithm>().CallJPEGCompressorAlgorithm(imageSource, imageCompressDirectory, quality);
+                    case CompressionAlgorithmSelected.none:
+                        DisplayAlert("Errore selezione algoritmo di compressione'", "Selezionare algoritmo di compressione", "OK");
+                        return false;
+                }
             }
-            
+            DisplayAlert("Errore selezione qualita'", "Selezionare qualita' valida", "OK");
             return false;
+        }
+
+        private bool CheckCorrectQualityValue(string qualityValue)
+        {
+            return true ? qualityValue != null && Convert.ToInt32(qualityValue) >= 0 && Convert.ToInt32(qualityValue) <= 100
+            : false;
         }
 
         private bool SendFileToServer()
         {
-            if (!CreateTxtFile())
+            try
+            {
+                CreateTxtFile();
+                Send();
+                return true;
+            }
+            catch(Exception e)
             {
                 return false;
             }
-            Send();
-            return true;
         }
 
         private async void Send()
@@ -150,11 +217,11 @@ namespace IMA
             }
             catch (Exception e)
             {
-                return;
+                throw new Exception("Errore invio file");
             }
         }
 
-        private bool CreateTxtFile()
+        private void CreateTxtFile()
         {
             FileStream fs = null;
             try
@@ -179,9 +246,8 @@ namespace IMA
             }
             catch (Exception e)
             {
-                return false;
+                throw new Exception("Errore creazione file di testo");
             }
-            return true;
         }
 
         private bool CoordinateRectangleExist()

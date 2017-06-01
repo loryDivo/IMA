@@ -13,6 +13,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)src\BitMapArea.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\CompressionAlgorithmSelected.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\Display.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\ICompressorAlgorithm.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\IDevice\DeviceOrientations.cs" />

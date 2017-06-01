@@ -5,6 +5,7 @@ namespace IMA.src
 {
     public interface ICompressorAlgorithm
     {
-        int CallCompressorAlgorithm(string imageSource, string imageDestination);
+        int CallWEBPCompressorAlgorithm(string imageSource, string imageDestination, string quality);
+        bool CallJPEGCompressorAlgorithm(string imageSource, string imageDestination, string quality);
     }
 }

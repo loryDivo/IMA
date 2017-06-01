@@ -132,7 +132,7 @@ namespace IMA
             });
             CallImageActionTools();
             */
-            int m = DependencyService.Get<ICompressorAlgorithm>().CallCompressorAlgorithm("m.jpg", "f.jpg");
+            
         }
 
         private void CallImageActionTools()

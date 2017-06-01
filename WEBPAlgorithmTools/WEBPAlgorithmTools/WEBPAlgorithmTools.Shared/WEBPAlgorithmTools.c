@@ -1,13 +1,15 @@
 #include "WEBPAlgorithmTools.h"
 #include "../../examples/cwebp.h"
 
-int WEBPEncode_internal(const char * imageSource, const char * imageDestination) {
-	const char * string[4];
+int WEBPEncode_internal(const char * imageSource, const char * imageDestination, const char *quality) {
+	const char * string[6];
 	string[0] = "cwebp";
-	string[1] = imageSource;
-	string[2] = "-o";
-	string[3] = imageDestination;
-	return cwebp(4, string);
+	string[1] = "-q";
+	string[2] = quality;
+	string[3] = imageSource;
+	string[4] = "-o";
+	string[5] = imageDestination;
+	return cwebp(6, string);
 }
 
 

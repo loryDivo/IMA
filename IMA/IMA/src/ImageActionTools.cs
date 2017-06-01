@@ -1,5 +1,4 @@
-﻿using IMA.src.IDevice;
-using SkiaSharp;
+﻿using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using System;
 using TouchTracking;
