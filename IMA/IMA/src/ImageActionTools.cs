@@ -5,6 +5,7 @@ using TouchTracking;
 using Xamarin.Forms;
 using System.Collections.Generic;
 using IMA.src;
+using System.Linq;
 
 namespace IMA
 {
@@ -20,14 +21,17 @@ namespace IMA
         private SKPaint paintResizeRectSelectionArea;
         private SKCanvasView canvasBitMap;
 
-        private RectangleArea rectangleArea;
-        private SKRect rectSelectionArea;
-        private SKPaint paintRectSelectionArea;
-
         private TouchEffect touchEffect;
-        private List<long> touchId;
+        private List<long> allTouchEffect;
+
+        private List<RectangleArea> allRectangleArea;
+
         private PinchGestureRecognizer pinchGesture;
         private PanGestureRecognizer panGesture;
+
+        private StackLayout rectangleInsertIDLayout;
+        private Entry rectangleIDText;
+        private Button btnConfirmID;
 
         //PINCH
         private const double MIN_SCALE = 1;
@@ -53,7 +57,8 @@ namespace IMA
             canvasBitMap = new SKCanvasView();
             canvasBitMap.PaintSurface += OnCanvasViewBitMapImgSurface;
 
-            rectangleArea = new RectangleArea();
+            allRectangleArea = new List<RectangleArea>();
+            allTouchEffect = new List<long>();
 
             Scale = MIN_SCALE;
             TranslationX = TranslationY = 0;
@@ -68,6 +73,10 @@ namespace IMA
             panGesture.PanUpdated += OnPanUpdated;
             gridLayout.GestureRecognizers.Add(panGesture);
 
+            touchEffect = new TouchEffect();
+            touchEffect.TouchAction += OnTouchEffectAction;
+            gridLayout.Effects.Add(touchEffect);
+
             gridLayout.Children.Add(canvasBitMap);
 
             Content = gridLayout;
@@ -79,7 +88,7 @@ namespace IMA
             ToolbarItem rectanglePortion = new ToolbarItem()
             {
                 Icon = "rectangleSelection.png",
-                Command = new Command(this.ShowRectangleIntoImageArea),
+                Command = new Command(this.AddRectangleIntoImageArea),
             };
 
             this.ToolbarItems.Add(rectanglePortion);
@@ -176,29 +185,25 @@ namespace IMA
 
             if (!DisplayChange(canvas))
             {
-                if (rectangleArea.DrawRectArea && !rectangleArea.PanMove && !rectangleArea.ResizeMove)
+                foreach (RectangleArea rectangleArea in allRectangleArea)
                 {
-                    canvas.DrawRect(rectSelectionArea, paintRectSelectionArea);
-                }
-                else if (rectangleArea.DrawRectArea && rectangleArea.PanMove && !rectangleArea.ResizeMove)
-                {
-                    canvas.DrawRect(rectSelectionArea, paintRectSelectionArea);
-                    rectangleArea.PanMove = false;
-                }
-                else if (rectangleArea.DrawRectArea && rectangleArea.ResizeMove && !rectangleArea.PanMove)
-                {
-                    paintResizeRectSelectionArea = new SKPaint
+                    SKRect rectSelectionArea = new SKRect(rectangleArea.Left, rectangleArea.Top, rectangleArea.Right, rectangleArea.Bottom);
+
+                    if (rectangleArea.ResizeMove)
                     {
-                        IsAntialias = true,
-                        Style = SKPaintStyle.Fill,
-                        Color = SKColors.LightSkyBlue,
-                    };
-                    canvas.DrawRect(rectSelectionArea, paintRectSelectionArea);
-                    canvas.DrawCircle(rectangleArea.Left, rectangleArea.Top, rectangleArea.RadiousOfCircleRect, paintResizeRectSelectionArea);
-                    canvas.DrawCircle(rectangleArea.Left, rectangleArea.Bottom, rectangleArea.RadiousOfCircleRect, paintResizeRectSelectionArea);
-                    canvas.DrawCircle(rectangleArea.Right, rectangleArea.Top, rectangleArea.RadiousOfCircleRect, paintResizeRectSelectionArea);
-                    canvas.DrawCircle(rectangleArea.Right, rectangleArea.Bottom, rectangleArea.RadiousOfCircleRect, paintResizeRectSelectionArea);
-                    rectangleArea.ResizeMove = false;
+                        paintResizeRectSelectionArea = new SKPaint
+                        {
+                            IsAntialias = true,
+                            Style = SKPaintStyle.Fill,
+                            Color = SKColors.LightSkyBlue,
+                        };
+                        canvas.DrawCircle(rectangleArea.Left, rectangleArea.Top, rectangleArea.RadiousOfCircleRect, paintResizeRectSelectionArea);
+                        canvas.DrawCircle(rectangleArea.Left, rectangleArea.Bottom, rectangleArea.RadiousOfCircleRect, paintResizeRectSelectionArea);
+                        canvas.DrawCircle(rectangleArea.Right, rectangleArea.Top, rectangleArea.RadiousOfCircleRect, paintResizeRectSelectionArea);
+                        canvas.DrawCircle(rectangleArea.Right, rectangleArea.Bottom, rectangleArea.RadiousOfCircleRect, paintResizeRectSelectionArea);
+                        rectangleArea.ResizeMove = false;
+                    }
+                    canvas.DrawRect(rectSelectionArea, rectangleArea.PaintRect);
                 }
             }
         }
@@ -208,53 +213,20 @@ namespace IMA
             if (display.PrevRatio == 0)
             {
                 display.PrevRatio = display.AspectRatio;
-                if (rectangleArea.DrawRectArea && !rectangleArea.PanMove && !rectangleArea.ResizeMove)
-                {
-                    DrawRectArea(canvas, true);
-                }
                 return true;
             }
             else if (display.AspectRatio != display.PrevRatio)
             {
-                if (rectangleArea.DrawRectArea && !rectangleArea.PanMove && !rectangleArea.ResizeMove)
-                {
-                    DrawRectArea(canvas, false);
-                }
-                display.PrevRatio = display.AspectRatio;
                 return true;
             }
             return false;
-        }
-
-        private void DrawRectArea(SKCanvas canvas, Boolean defaultRectPosition)
-        {
-            if (defaultRectPosition)
-            {
-                rectangleArea.Top = bitMapArea.Top;
-                rectangleArea.Left = bitMapArea.Left;
-            }
-            else
-            {
-                //Resize rect
-            }
-            rectangleArea.Right = rectangleArea.Left + rectangleArea.OffSetRectWidth;
-            rectangleArea.Bottom = rectangleArea.Top + rectangleArea.OffSetRectHeight;
-
-            rectSelectionArea = new SKRect(rectangleArea.Left, rectangleArea.Top, rectangleArea.Right, rectangleArea.Bottom);
-            canvas.DrawRect(rectSelectionArea, paintRectSelectionArea);
-        }
-
-        SKPoint ConvertToPixel(Point pt)
-        {
-            return new SKPoint((float)(canvasBitMap.CanvasSize.Width * pt.X / canvasBitMap.Width),
-                               (float)(canvasBitMap.CanvasSize.Height * pt.Y / canvasBitMap.Height));
         }
 
         private void SendFileToCompressor()
         {
             if (ScaleRectCoordinate())
             {
-                Navigation.PushAsync(new Sender(this, bitMapArea.BitMapDirectorySource, rectangleArea));
+                Navigation.PushAsync(new Sender(this, bitMapArea.BitMapDirectorySource, allRectangleArea));
             }
             else
             {
@@ -264,9 +236,12 @@ namespace IMA
 
         private bool ScaleRectCoordinate()
         {
-            if (rectangleArea.DrawRectArea)
+            if (allRectangleArea.Count > 0)
             {
-                rectangleArea.CalculateScaleVertexCoordinate(bitMapArea);
+                foreach (RectangleArea rectangleArea in allRectangleArea)
+                {
+                    rectangleArea.CalculateScaleVertexCoordinate(bitMapArea);
+                }
                 return true;
             }
             else
@@ -276,79 +251,130 @@ namespace IMA
             }
         }
 
-        private void ShowRectangleIntoImageArea()
+        private void AddRectangleIntoImageArea()
         {
-            if (!rectangleArea.DrawRectArea)
+            rectangleInsertIDLayout = new StackLayout();
+
+            rectangleIDText = new Entry
             {
+                Placeholder = "write rectangle ID",
+                WidthRequest = 250,
+                VerticalOptions = LayoutOptions.CenterAndExpand,
+                HorizontalOptions = LayoutOptions.Center,
+            };
+
+            Button btnConfirmID = new Button
+            {
+                Text = "Confirm",
+                Font = Font.SystemFontOfSize(NamedSize.Large),
+                BorderWidth = 1,
+                VerticalOptions = LayoutOptions.StartAndExpand,
+                HorizontalOptions = LayoutOptions.Center,
+            };
+
+            btnConfirmID.Clicked += OnButtonConfirmIDRectangleClicked;
+            rectangleInsertIDLayout.Children.Add(rectangleIDText);
+            rectangleInsertIDLayout.Children.Add(btnConfirmID);
+            rectangleInsertIDLayout.BackgroundColor = Color.Gray;
+
+            gridLayout.Children.Add(rectangleInsertIDLayout);
+        }
+
+        private void OnButtonConfirmIDRectangleClicked(object sender, EventArgs e)
+        {
+            if(rectangleIDText.Text != null && !DupplicatedIDValue(rectangleIDText.Text))
+            {
+                gridLayout.Children.Remove(rectangleInsertIDLayout);
+
+                byte[] buffer = new byte[4];
+                new Random().NextBytes(buffer);
+
+                RectangleArea rectangleArea = new RectangleArea(rectangleIDText.Text, new SKPaint
+                {
+                    Color = new SKColor(buffer[0], buffer[1], buffer[2], buffer[3]),
+                    Style = SKPaintStyle.Stroke,
+                    StrokeWidth = 5
+
+                });
 
                 rectangleArea.Top = bitMapArea.Top;
                 rectangleArea.Left = bitMapArea.Left;
                 rectangleArea.Right = rectangleArea.Left + rectangleArea.OffSetRectWidth;
                 rectangleArea.Bottom = rectangleArea.Top + rectangleArea.OffSetRectHeight;
 
-                rectSelectionArea = new SKRect(rectangleArea.Left, rectangleArea.Top, rectangleArea.Right, rectangleArea.Bottom);
-                paintRectSelectionArea = new SKPaint
-                {
-                    Color = SKColors.Black,
-                    Style = SKPaintStyle.Stroke,
-                    StrokeWidth = 5
+                allRectangleArea.Add(rectangleArea);
 
-                };
-
-                rectangleArea.DrawRectArea = true;
-
-                touchId = new List<long>();
-                touchEffect = new TouchEffect();
-                touchEffect.TouchAction += OnTouchEffectAction;
-                gridLayout.Effects.Add(touchEffect);
-                gridLayout.GestureRecognizers.Remove(pinchGesture);
-                gridLayout.GestureRecognizers.Remove(panGesture);
+                canvasBitMap.InvalidateSurface();
             }
             else
             {
-                canvasBitMap.Effects.Remove(touchEffect);
-                gridLayout.GestureRecognizers.Add(pinchGesture);
-                gridLayout.GestureRecognizers.Add(panGesture);
-                rectangleArea.DrawRectArea = false;
+                DisplayAlert("ID non valido", "Inserire un ID valido", "OK");
             }
-            canvasBitMap.InvalidateSurface();
+        }
+
+        private bool DupplicatedIDValue(string idNewRect)
+        {
+            foreach (RectangleArea rectangleArea in allRectangleArea)
+            {
+                if (rectangleArea.EqualsID(idNewRect))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void OnTouchEffectAction(object sender, TouchActionEventArgs args)
         {
+
             switch (args.Type)
             {
 
                 case TouchActionType.Pressed:
-                    if (!touchId.Contains(args.Id)){
-                        touchId.Add(args.Id);
+                    foreach(RectangleArea rectangleArea in allRectangleArea)
+                    {
+                        if (rectangleArea.CheckIfInAnyRectangle(UtilityFunctions.ConvertToPixel(args.Location, canvasBitMap)) && !allTouchEffect.Contains(args.Id))
+                        {
+                            allTouchEffect.Add(args.Id);
+                            rectangleArea.RectangleSelected = true;
+                        }
                     }
                     break;
 
                 case TouchActionType.Moved:
-                    if (touchId.Contains(args.Id))
+                    foreach (RectangleArea rectangleArea in allRectangleArea)
                     {
-                        rectangleArea.ResizeInfo = CheckIfResize(args.Location);
-                        if (rectangleArea.ResizeInfo != ResizeInfo.none)
+                        if (allTouchEffect.Contains(args.Id) && rectangleArea.RectangleSelected)
                         {
-                            ResizeRect(rectangleArea.PixelCoordinateDetected, rectangleArea.ResizeInfo);
-                        }
-                        else
-                        {
-                            RectangleMoveArea(args.Location);
+                            rectangleArea.ResizeInfo = CheckIfResize(args.Location, rectangleArea);
+                            if (rectangleArea.ResizeInfo != ResizeInfo.none)
+                            {
+                                ResizeRect(rectangleArea.PixelCoordinateDetected, rectangleArea.ResizeInfo, rectangleArea);
+                            }
+                            else if (rectangleArea.CheckIfInAnyRectangle(UtilityFunctions.ConvertToPixel(args.Location, canvasBitMap)))
+                            {
+                                RectangleMoveArea(args.Location, rectangleArea);
+                            }
                         }
                     }
                     break;
                 case TouchActionType.Released:
-                    if (touchId.Contains(args.Id))
+                    if (allTouchEffect.Contains(args.Id))
                     {
-                        touchId.Remove(args.Id);
+                        foreach (RectangleArea rectangleArea in allRectangleArea)
+                        {
+                            if (rectangleArea.RectangleSelected)
+                            {
+                                rectangleArea.RectangleSelected = false;
+                            }
+                        }
+                        allTouchEffect.Remove(args.Id);
                     }
                     break;
             }
         }
 
-        private ResizeInfo CheckIfResize(Point coordinateDetected)
+        private ResizeInfo CheckIfResize(Point coordinateDetected, RectangleArea rectangleArea)
         {
 
             rectangleArea.CalculateVertexCoordinate();
@@ -361,7 +387,7 @@ namespace IMA
             return resizeDetected;
         }
 
-        private void ResizeRect(SKPoint coordinatePixelDetected, ResizeInfo resizeDetected)
+        private void ResizeRect(SKPoint coordinatePixelDetected, ResizeInfo resizeDetected, RectangleArea rectangleArea)
         {
 
             MovimentInfo resizeMovimentDetected = MovimentMethods.GetResizeInfo(coordinatePixelDetected.X, coordinatePixelDetected.Y,
@@ -370,33 +396,29 @@ namespace IMA
             switch (resizeDetected)
             {
                 case ResizeInfo.LeftTopAround:
-                    LeftTopResizeCase(coordinatePixelDetected, resizeMovimentDetected);
+                    LeftTopResizeCase(coordinatePixelDetected, resizeMovimentDetected, rectangleArea);
                     break;
 
                 case ResizeInfo.LeftBottomAround:
-                    LeftBottomResizeCase(coordinatePixelDetected, resizeMovimentDetected);
+                    LeftBottomResizeCase(coordinatePixelDetected, resizeMovimentDetected, rectangleArea);
                     break;
 
                 case ResizeInfo.RightTopAround:
-                    RightTopResizeCase(coordinatePixelDetected, resizeMovimentDetected);
+                    RightTopResizeCase(coordinatePixelDetected, resizeMovimentDetected, rectangleArea);
                     break;
 
                 case ResizeInfo.RightBottomAround:
-                    RightBottomResizeCase(coordinatePixelDetected, resizeMovimentDetected);
+                    RightBottomResizeCase(coordinatePixelDetected, resizeMovimentDetected, rectangleArea);
                     break;
 
             }
-            rectSelectionArea.Top = rectangleArea.Top;
-            rectSelectionArea.Right = rectangleArea.Right;
-            rectSelectionArea.Left = rectangleArea.Left;
-            rectSelectionArea.Bottom = rectangleArea.Bottom;
             rectangleArea.OffSetRectHeight = rectangleArea.Bottom - rectangleArea.Top;
             rectangleArea.OffSetRectWidth = rectangleArea.Right - rectangleArea.Left;
             rectangleArea.ResizeMove = true;
             canvasBitMap.InvalidateSurface();
         }
 
-        private void LeftTopResizeCase(SKPoint coordinatePixelDetected, MovimentInfo resizeMovimentDetected)
+        private void LeftTopResizeCase(SKPoint coordinatePixelDetected, MovimentInfo resizeMovimentDetected, RectangleArea rectangleArea)
         {
 
             switch (resizeMovimentDetected)
@@ -420,12 +442,11 @@ namespace IMA
                     rectangleArea.Left = coordinatePixelDetected.X;
                     rectangleArea.Top = coordinatePixelDetected.Y;
                     break;
-
             }
         }
 
 
-        private void LeftBottomResizeCase(SKPoint coordinatePixelDetected, MovimentInfo resizeMovimentDetected)
+        private void LeftBottomResizeCase(SKPoint coordinatePixelDetected, MovimentInfo resizeMovimentDetected, RectangleArea rectangleArea)
         {
 
             switch (resizeMovimentDetected)
@@ -452,7 +473,7 @@ namespace IMA
             }
         }
 
-        private void RightTopResizeCase(SKPoint coordinatePixelDetected, MovimentInfo resizeMovimentDetected)
+        private void RightTopResizeCase(SKPoint coordinatePixelDetected, MovimentInfo resizeMovimentDetected, RectangleArea rectangleArea)
         {
             switch (resizeMovimentDetected)
             {
@@ -478,7 +499,7 @@ namespace IMA
             }
         }
 
-        private void RightBottomResizeCase(SKPoint coordinatePixelDetected, MovimentInfo resizeMovimentDetected)
+        private void RightBottomResizeCase(SKPoint coordinatePixelDetected, MovimentInfo resizeMovimentDetected, RectangleArea rectangleArea)
         {
             switch (resizeMovimentDetected)
             {
@@ -506,10 +527,10 @@ namespace IMA
 
 
 
-        private void RectangleMoveArea(Point pointMove)
+        private void RectangleMoveArea(Point pointMove, RectangleArea rectangleArea)
         {
 
-            SKPoint pixelMove = ConvertToPixel(pointMove);
+            SKPoint pixelMove = UtilityFunctions.ConvertToPixel(pointMove, canvasBitMap);
             MovimentInfo actualMoviment = MovimentMethods.GetMovimentInfo(pixelMove.X, pixelMove.Y,
                                                                           bitMapArea.Left, bitMapArea.Top, bitMapArea.Right,
                                                                           bitMapArea.Bottom, rectangleArea.OffSetRectWidth, rectangleArea.OffSetRectHeight);
@@ -588,16 +609,7 @@ namespace IMA
                     break;
 
             }
-
-            rectSelectionArea.Top = rectangleArea.Top;
-            rectSelectionArea.Right = rectangleArea.Right;
-            rectSelectionArea.Left = rectangleArea.Left;
-            rectSelectionArea.Bottom = rectangleArea.Bottom;
-            rectangleArea.PanMove = true;
             canvasBitMap.InvalidateSurface();
-
         }
-
-
     }
 }

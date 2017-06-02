@@ -7,6 +7,7 @@ namespace IMA.src
 {
     public class RectangleArea : RectangleShapeArea
     {
+        private String id;
 
         private float radiousOfCircleRect = 20;
         private float topRect;
@@ -15,11 +16,6 @@ namespace IMA.src
         private float rightRect;
         private float offSetRectWidth = 100;
         private float offSetRectHeight = 100;
-
-
-        private Boolean drawRectArea = false;
-
-        private Boolean panMove = false;
 
         private ResizeInfo resizeInfo;
         private Boolean resizeMove = false;
@@ -41,9 +37,13 @@ namespace IMA.src
         private float scaleLeftPixelCoordinate;
         private float scaleRightPixelCoordinate;
 
-        public RectangleArea()
-        {
+        private bool rectangleSelected = false;
+        private SKPaint paintRect;
 
+        public RectangleArea(String idRect, SKPaint paintRect)
+        {
+            this.id = idRect;
+            this.PaintRect = paintRect;
         }
 
         public float RadiousOfCircleRect { get => radiousOfCircleRect; set => radiousOfCircleRect = value; }
@@ -53,8 +53,6 @@ namespace IMA.src
         public float Right { get => rightRect; set => rightRect = value; }
         public float OffSetRectWidth { get => offSetRectWidth; set => offSetRectWidth = value; }
         public float OffSetRectHeight { get => offSetRectHeight; set => offSetRectHeight = value; }
-        public bool DrawRectArea { get => drawRectArea; set => drawRectArea = value; }
-        public bool PanMove { get => panMove; set => panMove = value; }
         public bool ResizeMove { get => resizeMove; set => resizeMove = value; }
         public ResizeInfo ResizeInfo { get => resizeInfo; set => resizeInfo = value; }
         public SKPoint LeftTopPixelCoordinate { get => leftTopPixelCoordinateRect; set => leftTopPixelCoordinateRect = value; }
@@ -67,7 +65,10 @@ namespace IMA.src
         public SKPoint ScaleLeftBottomPixelCoordinate { get => scaleLeftBottomPixelCoordinateRect; set => scaleLeftBottomPixelCoordinateRect = value; }
         public SKPoint ScaleRightTopPixelCoordinate { get => scaleRightTopPixelCoordinateRect; set => scaleRightTopPixelCoordinateRect = value; }
         public SKPoint ScaleRightBottomPixelCoordinate { get => scaleRightBottomPixelCoordinateRect; set => scaleRightBottomPixelCoordinateRect = value; }
-       
+        public SKPaint PaintRect { get => paintRect; set => paintRect = value; }
+        public bool RectangleSelected { get => rectangleSelected; set => rectangleSelected = value; }
+        public String Id { get => id; set => id = value; }
+
         public void CalculateVertexCoordinate()
         {
             leftTopPixelCoordinateRect = new SKPoint(Left, Top);
@@ -95,6 +96,16 @@ namespace IMA.src
             PixelCoordinateDetected = UtilityFunctions.ConvertToPixel(new Point(coordinateDetected.X, coordinateDetected.Y), canvasBitMap);
         }
 
+        public bool CheckIfInAnyRectangle(SKPoint pointPixel)
+        {
+            return pointPixel.X >= leftRect && pointPixel.X <= rightRect
+                && pointPixel.Y >= topRect && pointPixel.Y <= Bottom;
+        }
+
+        public bool EqualsID(String idNewRect)
+        {
+            return id.Equals(idNewRect);
+        }
 
     }
 }

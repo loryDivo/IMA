@@ -25,6 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)src\IDevice\TouchEffect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\ImageActionTools.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\ImageUtility.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\JSONRectangleMapping.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\MainPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\ModelExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\MovementInfo.cs" />

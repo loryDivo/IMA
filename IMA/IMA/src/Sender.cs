@@ -5,6 +5,7 @@ using IMA.src;
 using Xamarin.Forms;
 using System.Net.Http;
 using System.Collections.Generic;
+using System.Text;
 
 namespace IMA
 {
@@ -12,26 +13,24 @@ namespace IMA
     {
 
         private static string defaultTempDirectory = System.IO.Path.GetTempPath();
-        private static string imageCompressDirectory = defaultTempDirectory + "compress.webp";
-        private string txtFileDirectory = defaultTempDirectory + "coordinate.txt";
-        private static string zipFileDirectory = defaultTempDirectory + "file.zip";
+        private static string imageCompressDirectory = defaultTempDirectory + "compress";
+        private string JSONFileDirectory = defaultTempDirectory + "coordinate";
         private static string URLSend = "http://127.0.0.1:5000/upload";
 
         private string imageSource;
-        private RectangleArea rectangleCoordinate;
+        private List<RectangleArea> allRectangleCoordinate;
 
         private ListView algorithmList;
-        private Entry qualityAlgorithmEntry;
+        private Slider qualityAlgorithmEntry;
         private StackLayout senderLayout;
 
-        public Sender(Page imageActionTools, string imageSource, RectangleArea rectangleCoordinate)
+        public Sender(Page imageActionTools, string imageSource, List<RectangleArea> allRectangleCoordinate)
         {
-            Navigation.RemovePage(imageActionTools);
             this.imageSource = imageSource;
-            this.rectangleCoordinate = rectangleCoordinate;
+            this.allRectangleCoordinate = allRectangleCoordinate;
             InitializeLayout();
         }
-        
+
         private void InitializeLayout()
         {
             Label informationAlgorithm = new Label
@@ -93,9 +92,11 @@ namespace IMA
                 HorizontalOptions = LayoutOptions.Center,
             };
 
-            qualityAlgorithmEntry = new Entry
+            qualityAlgorithmEntry = new Slider
             {
-                Placeholder = "enter quality"
+                Maximum = 100,
+                Minimum = 0,
+                Value = 50,
             };
 
             Button btnProcessImage = new Button
@@ -123,7 +124,7 @@ namespace IMA
 
         private void OnButtonClickProcessImage(object sender, EventArgs e)
         {
-            Boolean processComplete = CompressImage(CompressionAlgorithmSelectedMethods.AlgorithmSelected(algorithmList.SelectedItem), qualityAlgorithmEntry.Text);
+            Boolean processComplete = CompressImage(CompressionAlgorithmSelectedMethods.AlgorithmSelected(algorithmList.SelectedItem), Convert.ToString(qualityAlgorithmEntry.Value));
             Task userResponse;
             if (!processComplete)
             {
@@ -150,39 +151,32 @@ namespace IMA
 
         private bool CompressImage(CompressionAlgorithmSelected info, string quality)
         {
-            if (CheckCorrectQualityValue(quality))
+            switch (info)
             {
-                switch (info)
-                {
-                    case CompressionAlgorithmSelected.WEBPAlgorithm:
-                        int resultWEBP = DependencyService.Get<ICompressorAlgorithm>().CallWEBPCompressorAlgorithm(imageSource, imageCompressDirectory, quality);
-                        if (resultWEBP == 0)
-                        {
-                            return true;
-                        }
-                        return false;
-                    case CompressionAlgorithmSelected.JPEGAlgorithm:
-                        return DependencyService.Get<ICompressorAlgorithm>().CallJPEGCompressorAlgorithm(imageSource, imageCompressDirectory, quality);
-                    case CompressionAlgorithmSelected.none:
-                        DisplayAlert("Errore selezione algoritmo di compressione'", "Selezionare algoritmo di compressione", "OK");
-                        return false;
-                }
+                case CompressionAlgorithmSelected.WEBPAlgorithm:
+                    imageCompressDirectory = imageCompressDirectory + new Random().Next() + ".webp";
+                    int resultWEBP = DependencyService.Get<ICompressorAlgorithm>().CallWEBPCompressorAlgorithm(imageSource, imageCompressDirectory, quality);
+                    if (resultWEBP == 0)
+                    {
+                        return true;
+                    }
+                    return false;
+                case CompressionAlgorithmSelected.JPEGAlgorithm:
+                    imageCompressDirectory = imageCompressDirectory + new Random().Next() + ".webp";
+                    return DependencyService.Get<ICompressorAlgorithm>().CallJPEGCompressorAlgorithm(imageSource, imageCompressDirectory, quality);
+                case CompressionAlgorithmSelected.none:
+                    DisplayAlert("Errore selezione algoritmo di compressione'", "Selezionare algoritmo di compressione", "OK");
+                    return false;
             }
             DisplayAlert("Errore selezione qualita'", "Selezionare qualita' valida", "OK");
             return false;
-        }
-
-        private bool CheckCorrectQualityValue(string qualityValue)
-        {
-            return true ? qualityValue != null && Convert.ToInt32(qualityValue) >= 0 && Convert.ToInt32(qualityValue) <= 100
-            : false;
         }
 
         private bool SendFileToServer()
         {
             try
             {
-                CreateTxtFile();
+                CreateJSONFiles();
                 Send();
                 return true;
             }
@@ -196,9 +190,8 @@ namespace IMA
         {
             try
             {
-
                 var upImageBytes = File.ReadAllBytes(imageCompressDirectory);
-                var upTxtBytes = File.ReadAllBytes(txtFileDirectory);
+                var upJSONBytes = File.ReadAllBytes(JSONFileDirectory);
 
                 HttpClient client = new HttpClient();
                 MultipartFormDataContent content = new MultipartFormDataContent();
@@ -206,8 +199,8 @@ namespace IMA
                 ByteArrayContent imageContent = new ByteArrayContent(upImageBytes);
                 content.Add(imageContent, "image", "image.webp");
 
-                ByteArrayContent txtContent = new ByteArrayContent(upTxtBytes);
-                content.Add(txtContent, "coordinate", "coordinate.txt");
+                ByteArrayContent JSONContent = new ByteArrayContent(upJSONBytes);
+                content.Add(JSONContent, "coordinate", "coordinate.txt");
 
                 var response =
                     await client.PostAsync(URLSend, content);
@@ -221,38 +214,61 @@ namespace IMA
             }
         }
 
-        private void CreateTxtFile()
+        private void CreateJSONFiles()
         {
-            FileStream fs = null;
-            try
+            if (CoordinateRectangleExist())
             {
-                if (!File.Exists(defaultTempDirectory))
+                List<JSONRectangleMapping> jsonRectangleMapping = new List<JSONRectangleMapping>();
+                foreach (RectangleArea rectangleArea in allRectangleCoordinate)
                 {
-                    fs = File.Create(txtFileDirectory);
-                    StreamWriter sw = new StreamWriter(fs);
-                    if (CoordinateRectangleExist())
+                    jsonRectangleMapping.Add(new JSONRectangleMapping(rectangleArea.Id, rectangleArea.ScaleLeftTopPixelCoordinate, rectangleArea.ScaleLeftBottomPixelCoordinate,
+                                                rectangleArea.ScaleRightTopPixelCoordinate, rectangleArea.ScaleRightBottomPixelCoordinate));
+                }
+                FileStream fs = null;
+                try
+                {
+                    if (!File.Exists(defaultTempDirectory))
                     {
-                        sw.WriteLine("Coordinae left top " + rectangleCoordinate.ScaleLeftTopPixelCoordinate);
-                        sw.WriteLine("Coordinae left bottom " + rectangleCoordinate.ScaleLeftBottomPixelCoordinate);
-                        sw.WriteLine("Coordinae right top " + rectangleCoordinate.ScaleRightTopPixelCoordinate);
-                        sw.WriteLine("Coordinae right bottom " + rectangleCoordinate.ScaleRightBottomPixelCoordinate);
+                        fs = File.Create(JSONFileDirectory);
+                        StreamWriter sw = new StreamWriter(fs);
+                        if (CoordinateRectangleExist())
+                        {
+                            StringBuilder str = new StringBuilder();
+                            str.Append("[");
+                            int count = 0;
+                            foreach (JSONRectangleMapping jsonRectangleMap in jsonRectangleMapping)
+                            {
+                                count++;
+                                str.Append(jsonRectangleMap.CreateJSONString());
+                                if(count != jsonRectangleMapping.Count)
+                                {
+                                    str.Append(",");
+                                }
+                            }
+                            str.Append("]");
+                            sw.WriteLine(str);
+                        }
+                        else
+                        {
+                            sw.WriteLine("User not select rectangle coordinate");
+                        }
+                        sw.Dispose();
                     }
-                    else
-                    {
-                        sw.WriteLine("User not select rectangle coordinate");
-                    }
-                    sw.Dispose();
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Errore creazione file di testo");
                 }
             }
-            catch (Exception e)
+            else
             {
-                throw new Exception("Errore creazione file di testo");
+                DisplayAlert("Nessun rettangolo creato", "Nessun rettangolo creato, verrà procecssata l'intera immagine", "OK");
             }
         }
 
         private bool CoordinateRectangleExist()
         {
-            return rectangleCoordinate != null;
+            return allRectangleCoordinate != null;
         }
 
     }
