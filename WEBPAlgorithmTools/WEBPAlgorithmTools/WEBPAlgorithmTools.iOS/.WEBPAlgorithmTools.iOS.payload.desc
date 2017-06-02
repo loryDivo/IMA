@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <payload>
-  <file path="C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\WEBPAlgorithmTools\WEBPAlgorithmTools.iOS\x86\Debug\WEBPAlgorithmTools.iOS.xcodeproj\project.pbxproj" changed="2017-05-21T18:34:10.9333623+02:00" />
-  <file path="C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\WEBPAlgorithmTools\WEBPAlgorithmTools.Shared\WEBPAlgorithmTools.c" changed="2017-05-20T01:06:45.5769558+02:00" />
-  <file path="C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\WEBPAlgorithmTools\WEBPAlgorithmTools.iOS\WEBPAlgorithmTools.iOS.c" changed="2017-05-20T01:23:57.031379+02:00" />
-  <file path="C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\WEBPAlgorithmTools\WEBPAlgorithmTools.Shared\WEBPAlgorithmTools.h" changed="2017-05-19T13:29:24.7699334+02:00" />
-  <file path="C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\WEBPAlgorithmTools\WEBPAlgorithmTools.Shared\\WEBPAlgorithmTools.h" changed="2017-05-19T13:29:24.7699334+02:00" />
-  <file path="C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\WEBPAlgorithmTools\WEBPAlgorithmTools.Shared\..\..\examples\cwebp.c" changed="2017-05-14T03:18:28+02:00" />
+  <file path="C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\WEBPAlgorithmTools\WEBPAlgorithmTools.iOS\x86\Debug\WEBPAlgorithmTools.iOS.xcodeproj\project.pbxproj" changed="2017-06-02T14:49:45.8972389+02:00" />
+  <file path="C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\WEBPAlgorithmTools\WEBPAlgorithmTools.Shared\WEBPAlgorithmTools.c" changed="2017-06-01T12:46:05.748935+02:00" />
+  <file path="C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\WEBPAlgorithmTools\WEBPAlgorithmTools.iOS\WEBPAlgorithmTools.iOS.c" changed="2017-06-01T12:24:15.8905119+02:00" />
+  <file path="C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\WEBPAlgorithmTools\WEBPAlgorithmTools.Shared\WEBPAlgorithmTools.h" changed="2017-06-01T12:23:16.3329293+02:00" />
+  <file path="C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\WEBPAlgorithmTools\WEBPAlgorithmTools.Shared\\WEBPAlgorithmTools.h" changed="2017-06-01T12:23:16.3329293+02:00" />
+  <file path="C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\WEBPAlgorithmTools\WEBPAlgorithmTools.Shared\..\..\examples\cwebp.c" changed="2017-05-24T14:35:54.1055531+02:00" />
   <file path="C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\WEBPAlgorithmTools\WEBPAlgorithmTools.Shared\..\..\examples\dwebp.c" changed="2017-05-21T18:06:15.7023734+02:00" />
   <file path="C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\WEBPAlgorithmTools\WEBPAlgorithmTools.Shared\..\..\examples\example_util.c" changed="2017-05-14T03:18:28+02:00" />
   <file path="C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\WEBPAlgorithmTools\WEBPAlgorithmTools.Shared\..\..\imageio\imageio_util.c" changed="2017-05-14T03:18:28+02:00" />
@@ -269,7 +269,7 @@
   <file path="C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\WEBPAlgorithmTools\WEBPAlgorithmTools.Shared\..\..\src\lib\libjpeg\jpegint.h" changed="2017-05-14T03:18:28+02:00" />
   <file path="C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\WEBPAlgorithmTools\WEBPAlgorithmTools.Shared\..\..\src\lib\libjpeg\jpeglib.h" changed="2017-05-14T03:18:28+02:00" />
   <file path="C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\WEBPAlgorithmTools\WEBPAlgorithmTools.Shared\..\..\src\lib\libjpeg\jversion.h" changed="2017-05-14T03:18:28+02:00" />
-  <file path="C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\WEBPAlgorithmTools\WEBPAlgorithmTools.Shared\..\..\src\lib\libpng\png.h" changed="2017-05-14T03:18:28+02:00" />
+  <file path="C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\WEBPAlgorithmTools\WEBPAlgorithmTools.Shared\..\..\src\lib\libpng\png.h" changed="2017-05-22T00:28:42.2348803+02:00" />
   <file path="C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\WEBPAlgorithmTools\WEBPAlgorithmTools.Shared\..\..\src\lib\libpng\pngconf.h" changed="2017-05-14T03:18:28+02:00" />
   <file path="C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\WEBPAlgorithmTools\WEBPAlgorithmTools.Shared\..\..\src\lib\zlib\crc32.h" changed="2017-05-14T03:18:28+02:00" />
   <file path="C:\Users\Lorenzo\Documents\Visual Studio 2017\Projects\IMA\WEBPAlgorithmTools\WEBPAlgorithmTools\WEBPAlgorithmTools.Shared\..\..\src\lib\zlib\deflate.h" changed="2017-05-14T03:18:28+02:00" />

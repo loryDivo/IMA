@@ -17,24 +17,13 @@ namespace IMA.Droid
             int result = -1;
             activity.RunOnUiThread(() =>
             {
-                result = WEBPCompressorAlgorithm(imageSource, imageDestination);
+                result = WEBPCompressorAlgorithm(imageSource, imageDestination, quality);
             });
-            return result;
-        }
-
-        public bool CallJPEGCompressorAlgorithm(string imageSource, string imageDestination, string quality)
-        {
-            Bitmap bitMap = BitmapFactory.DecodeFile(imageSource);
-            bool result = false;
-            using (Stream stream = File.Create(imageDestination))
-            {
-                result = bitMap.Compress(Bitmap.CompressFormat.Jpeg, Convert.ToInt32(quality), stream);
-            }
             return result;
         }
 
         [DllImport("libWEBPAlgorithmTools", EntryPoint = "WEBPEncode")]
 
-        public static extern int WEBPCompressorAlgorithm(string imageSource, string imageDestination);
+        public static extern int WEBPCompressorAlgorithm(string imageSource, string imageDestination, string quality);
     }
 }

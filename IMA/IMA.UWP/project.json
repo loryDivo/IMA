@@ -1,6 +1,7 @@
 ﻿{
   "dependencies": {
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
+    "Portable.LibJpeg.NET": "1.5.1.1",
     "SkiaSharp": "1.58.0",
     "SkiaSharp.Views": "1.58.0",
     "SkiaSharp.Views.Forms": "1.58.0",

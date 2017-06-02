@@ -6,7 +6,7 @@ namespace IMA.IOS
 {
     public class CompressorAlgorithm_IOS : ICompressorAlgorithm
     {
-        public int CallCompressorAlgorithm(string imageSource, string imageDestination)
+        public int CallWEBPCompressorAlgorithm(string imageSource, string imageDestination, string quality)
         {
             int result = -1;
             result = WEBPCompressorAlgorithm(imageSource, imageDestination);

@@ -26,6 +26,7 @@ namespace IMA
 
         private List<RectangleArea> allRectangleArea;
 
+        private bool enablePanAndZoom = false;
         private PinchGestureRecognizer pinchGesture;
         private PanGestureRecognizer panGesture;
 
@@ -64,17 +65,14 @@ namespace IMA
             TranslationX = TranslationY = 0;
             AnchorX = AnchorY = 0;
 
-
             pinchGesture = new PinchGestureRecognizer();
             pinchGesture.PinchUpdated += OnPinchUpdated;
-            gridLayout.GestureRecognizers.Add(pinchGesture);
-
             panGesture = new PanGestureRecognizer();
             panGesture.PanUpdated += OnPanUpdated;
-            gridLayout.GestureRecognizers.Add(panGesture);
 
             touchEffect = new TouchEffect();
             touchEffect.TouchAction += OnTouchEffectAction;
+            touchEffect.Capture = true;
             gridLayout.Effects.Add(touchEffect);
 
             gridLayout.Children.Add(canvasBitMap);
@@ -85,6 +83,14 @@ namespace IMA
 
         private void ToolbarAdd()
         {
+            ToolbarItem enableZoomAndPan = new ToolbarItem()
+            {
+                Icon = "PanZoom.png",
+                Command = new Command(this.EnableZoomAndPan),
+            };
+
+            this.ToolbarItems.Add(enableZoomAndPan);
+
             ToolbarItem rectanglePortion = new ToolbarItem()
             {
                 Icon = "rectangleSelection.png",
@@ -103,6 +109,31 @@ namespace IMA
 
         }
     
+        private void EnableZoomAndPan()
+        {
+            gridLayout = new Grid();
+            gridLayout.Children.Add(canvasBitMap);
+
+            if (enablePanAndZoom)
+            {
+                touchEffect = new TouchEffect();
+                touchEffect.TouchAction += OnTouchEffectAction;
+                touchEffect.Capture = true;
+                gridLayout.Effects.Add(touchEffect);
+                canvasBitMap.GestureRecognizers.Remove(panGesture);
+                canvasBitMap.GestureRecognizers.Remove(pinchGesture);
+                enablePanAndZoom = false;
+            }
+            else
+            {
+                gridLayout.Effects.Remove(touchEffect);
+                canvasBitMap.GestureRecognizers.Add(panGesture);
+                canvasBitMap.GestureRecognizers.Add(pinchGesture);
+                enablePanAndZoom = true;
+            }
+            Content = gridLayout;
+        }
+
         private void OnPinchUpdated(object sender, PinchGestureUpdatedEventArgs e)
         {
             switch (e.Status)

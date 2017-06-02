@@ -13,8 +13,8 @@ namespace IMA
     {
 
         private static string defaultTempDirectory = System.IO.Path.GetTempPath();
-        private static string imageCompressDirectory = defaultTempDirectory + "compress";
-        private string JSONFileDirectory = defaultTempDirectory + "coordinate";
+        private static string imageCompressDirectory = defaultTempDirectory + "compress.webp";
+        private string JSONFileDirectory = defaultTempDirectory + "coordinate.txt";
         private static string URLSend = "http://127.0.0.1:5000/upload";
 
         private string imageSource;
@@ -154,7 +154,6 @@ namespace IMA
             switch (info)
             {
                 case CompressionAlgorithmSelected.WEBPAlgorithm:
-                    imageCompressDirectory = imageCompressDirectory + new Random().Next() + ".webp";
                     int resultWEBP = DependencyService.Get<ICompressorAlgorithm>().CallWEBPCompressorAlgorithm(imageSource, imageCompressDirectory, quality);
                     if (resultWEBP == 0)
                     {
@@ -162,8 +161,7 @@ namespace IMA
                     }
                     return false;
                 case CompressionAlgorithmSelected.JPEGAlgorithm:
-                    imageCompressDirectory = imageCompressDirectory + new Random().Next() + ".webp";
-                    return DependencyService.Get<ICompressorAlgorithm>().CallJPEGCompressorAlgorithm(imageSource, imageCompressDirectory, quality);
+                    return JPEGCompressorAlgorithm.JPEGCompressor(imageSource, imageCompressDirectory, Convert.ToInt32(quality));
                 case CompressionAlgorithmSelected.none:
                     DisplayAlert("Errore selezione algoritmo di compressione'", "Selezionare algoritmo di compressione", "OK");
                     return false;
