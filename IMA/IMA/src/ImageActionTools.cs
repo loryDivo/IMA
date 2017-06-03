@@ -106,7 +106,7 @@ namespace IMA
             ToolbarItem removeRectangle = new ToolbarItem()
             {
                 Icon = "rectangleRemove.png",
-                Command = new Command(this.RemoveRectangleSelected),
+                Command = new Command(this.RemoveRectangleSelectedIntoImageArea),
             };
 
             this.ToolbarItems.Add(removeRectangle);
@@ -329,7 +329,7 @@ namespace IMA
             gridLayout.Children.Add(rectangleInsertIDLayout);
         }
 
-        private void RemoveRectangleSelected()
+        private void RemoveRectangleSelectedIntoImageArea()
         {
             if (removeRectangleState)
             {
@@ -392,7 +392,6 @@ namespace IMA
 
             switch (args.Type)
             {
-
                 case TouchActionType.Pressed:
                     foreach(RectangleArea rectangleArea in allRectangleArea)
                     {

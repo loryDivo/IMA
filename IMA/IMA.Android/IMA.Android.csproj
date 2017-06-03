@@ -116,7 +116,6 @@
     <Compile Include="Device\DeviceOrientations_Android.cs" />
     <Compile Include="Device\Display_Android.cs" />
     <Compile Include="Device\TouchEffect_Android.cs" />
-    <Compile Include="ImageUtility_Android.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="PicturePicker_Android.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />

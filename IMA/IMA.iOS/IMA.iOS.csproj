@@ -91,7 +91,6 @@
     <Compile Include="CompressorAlgorithm_IOS.cs" />
     <Compile Include="Device\TouchEffect_IOS.cs" />
     <Compile Include="Device\TouchRecognizer_IOS.cs" />
-    <Compile Include="ImageUtility_IOS.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="Entitlements.plist" />
