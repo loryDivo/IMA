@@ -144,6 +144,7 @@
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <Content Include="rectangleRemove.png" />
     <Content Include="rectangleSelection.png" />
     <Content Include="sendImage.png" />
     <Content Include="WEPAlgorithmTools.UWP.dll">

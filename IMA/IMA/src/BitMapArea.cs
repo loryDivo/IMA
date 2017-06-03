@@ -37,6 +37,8 @@ namespace IMA.src
 
         private float scaleHeight;
         private float scaleWidth;
+        private float previousScaleHeight;
+        private float previousScaleWidth;
 
         public BitMapArea(SKBitmap bitMap)
         {
@@ -66,6 +68,8 @@ namespace IMA.src
         public float Width { get => width; set => width = value; }
         public float ScaleHeight { get => scaleHeight; set => scaleHeight = value; }
         public float ScaleWidth { get => scaleWidth; set => scaleWidth = value; }
+        public float PreviousScaleHeight { get => previousScaleHeight; set => previousScaleHeight = value; }
+        public float PreviousScaleWidth { get => previousScaleWidth; set => previousScaleWidth = value; }
 
         public void CalculateVertexCoordinate()
         {
@@ -83,6 +87,9 @@ namespace IMA.src
             Bottom = Top + display.AspectRatio * BitMap.Height;
             Width = Right - Left;
             Height = Bottom - Top;
+
+            PreviousScaleHeight = scaleHeight;
+            previousScaleWidth = scaleWidth;
             scaleHeight = (float)BitMap.Height / (float)Height;
             scaleWidth = (float)BitMap.Width / (float)Width;
         }

@@ -34,12 +34,15 @@ namespace IMA
         private Entry rectangleIDText;
         private Button btnConfirmID;
 
+        private bool removeRectangleState = false;
+
         //PINCH
         private const double MIN_SCALE = 1;
         private const double MAX_SCALE = 4;
         private const double OVERSHOOT = 0.15;
-        private double StartScale;
-        private double LastScale;
+        private double startScale;
+        private double lastScale;
+        private double actualScale;
         //PAN
         private double StartX, StartY;
 
@@ -91,6 +94,7 @@ namespace IMA
 
             this.ToolbarItems.Add(enableZoomAndPan);
 
+
             ToolbarItem rectanglePortion = new ToolbarItem()
             {
                 Icon = "rectangleSelection.png",
@@ -98,6 +102,14 @@ namespace IMA
             };
 
             this.ToolbarItems.Add(rectanglePortion);
+
+            ToolbarItem removeRectangle = new ToolbarItem()
+            {
+                Icon = "rectangleRemove.png",
+                Command = new Command(this.RemoveRectangleSelected),
+            };
+
+            this.ToolbarItems.Add(removeRectangle);
 
             ToolbarItem sendFile = new ToolbarItem()
             {
@@ -139,19 +151,19 @@ namespace IMA
             switch (e.Status)
             {
                 case GestureStatus.Started:
-                    LastScale = e.Scale;
-                    StartScale = Scale;
+                    lastScale = e.Scale;
+                    startScale = Scale;
                     AnchorX = e.ScaleOrigin.X;
                     AnchorY = e.ScaleOrigin.Y;
                     break;
 
                 case GestureStatus.Running:
-                    if (e.Scale < 0 || Math.Abs(LastScale - e.Scale) > (LastScale * 1.3) - LastScale)
+                    if (e.Scale < 0 || Math.Abs(lastScale - e.Scale) > (lastScale * 1.3) - lastScale)
                     {                   
                         return;
                     }
-                    LastScale = e.Scale;
-                    var current = Scale + (e.Scale - 1) * StartScale;
+                    lastScale = e.Scale;
+                    var current = Scale + (e.Scale - 1) * startScale;
                     Scale = Clamp(current, MIN_SCALE * (1 - OVERSHOOT), MAX_SCALE * (1 + OVERSHOOT));
                     break;
 
@@ -213,44 +225,46 @@ namespace IMA
 
             canvas.DrawBitmap(bitMapArea.BitMap, rectangleBitMapImg);
 
+            DisplayChange(canvas);
 
-            if (!DisplayChange(canvas))
+            foreach (RectangleArea rectangleArea in allRectangleArea)
             {
-                foreach (RectangleArea rectangleArea in allRectangleArea)
-                {
-                    SKRect rectSelectionArea = new SKRect(rectangleArea.Left, rectangleArea.Top, rectangleArea.Right, rectangleArea.Bottom);
+                SKRect rectSelectionArea = new SKRect(rectangleArea.Left, rectangleArea.Top, rectangleArea.Right, rectangleArea.Bottom);
 
-                    if (rectangleArea.ResizeMove)
+                if (rectangleArea.ResizeMove)
+                {
+                    paintResizeRectSelectionArea = new SKPaint
                     {
-                        paintResizeRectSelectionArea = new SKPaint
-                        {
-                            IsAntialias = true,
-                            Style = SKPaintStyle.Fill,
-                            Color = SKColors.LightSkyBlue,
-                        };
-                        canvas.DrawCircle(rectangleArea.Left, rectangleArea.Top, rectangleArea.RadiousOfCircleRect, paintResizeRectSelectionArea);
-                        canvas.DrawCircle(rectangleArea.Left, rectangleArea.Bottom, rectangleArea.RadiousOfCircleRect, paintResizeRectSelectionArea);
-                        canvas.DrawCircle(rectangleArea.Right, rectangleArea.Top, rectangleArea.RadiousOfCircleRect, paintResizeRectSelectionArea);
-                        canvas.DrawCircle(rectangleArea.Right, rectangleArea.Bottom, rectangleArea.RadiousOfCircleRect, paintResizeRectSelectionArea);
-                        rectangleArea.ResizeMove = false;
-                    }
-                    canvas.DrawRect(rectSelectionArea, rectangleArea.PaintRect);
+                        IsAntialias = true,
+                        Style = SKPaintStyle.Fill,
+                        Color = SKColors.LightSkyBlue,
+                    };
+                    canvas.DrawCircle(rectangleArea.Left, rectangleArea.Top, rectangleArea.RadiousOfCircleRect, paintResizeRectSelectionArea);
+                    canvas.DrawCircle(rectangleArea.Left, rectangleArea.Bottom, rectangleArea.RadiousOfCircleRect, paintResizeRectSelectionArea);
+                    canvas.DrawCircle(rectangleArea.Right, rectangleArea.Top, rectangleArea.RadiousOfCircleRect, paintResizeRectSelectionArea);
+                    canvas.DrawCircle(rectangleArea.Right, rectangleArea.Bottom, rectangleArea.RadiousOfCircleRect, paintResizeRectSelectionArea);
+                    rectangleArea.ResizeMove = false;
                 }
+                canvas.DrawRect(rectSelectionArea, rectangleArea.PaintRect);
             }
         }
 
-        private Boolean DisplayChange(SKCanvas canvas)
+        private void DisplayChange(SKCanvas canvas)
         {
             if (display.PrevRatio == 0)
             {
                 display.PrevRatio = display.AspectRatio;
-                return true;
             }
             else if (display.AspectRatio != display.PrevRatio)
             {
-                return true;
+                // CHANGE SCALE ?????
+                RescaleRectangleCoordinate();
             }
-            return false;
+        }
+
+        private void RescaleRectangleCoordinate()
+        {
+            allRectangleArea.RemoveRange(0, allRectangleArea.Count);
         }
 
         private void SendFileToCompressor()
@@ -284,6 +298,10 @@ namespace IMA
 
         private void AddRectangleIntoImageArea()
         {
+            removeRectangleState = false;
+            actualScale = Scale;
+            Scale = MIN_SCALE;
+
             rectangleInsertIDLayout = new StackLayout();
 
             rectangleIDText = new Entry
@@ -311,6 +329,19 @@ namespace IMA
             gridLayout.Children.Add(rectangleInsertIDLayout);
         }
 
+        private void RemoveRectangleSelected()
+        {
+            if (removeRectangleState)
+            {
+                removeRectangleState = false;
+            }
+            else
+            {
+                removeRectangleState = true;
+                DisplayAlert("Selezionare rettangolo da rimuovere", "Selezionare rettangolo da rimuovere", "OK");
+            }
+        }
+
         private void OnButtonConfirmIDRectangleClicked(object sender, EventArgs e)
         {
             if(rectangleIDText.Text != null && !DupplicatedIDValue(rectangleIDText.Text))
@@ -335,6 +366,7 @@ namespace IMA
 
                 allRectangleArea.Add(rectangleArea);
 
+                Scale = actualScale;
                 canvasBitMap.InvalidateSurface();
             }
             else
@@ -367,8 +399,20 @@ namespace IMA
                         if (rectangleArea.CheckIfInAnyRectangle(UtilityFunctions.ConvertToPixel(args.Location, canvasBitMap)) && !allTouchEffect.Contains(args.Id))
                         {
                             allTouchEffect.Add(args.Id);
-                            rectangleArea.RectangleSelected = true;
+                            if (removeRectangleState)
+                            {
+                                allRectangleArea.Remove(rectangleArea);
+                                break;
+                            }
+                            else
+                            {
+                                rectangleArea.RectangleSelected = true;
+                            }
                         }
+                    }
+                    if (removeRectangleState)
+                    {
+                        canvasBitMap.InvalidateSurface();
                     }
                     break;
 

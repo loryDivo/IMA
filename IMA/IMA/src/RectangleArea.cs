@@ -83,11 +83,29 @@ namespace IMA.src
             scaleBottomPixelCoordinate = bottomRect - bitMapArea.Top;
             scaleLeftPixelCoordinate = leftRect - bitMapArea.Left;
             scaleRightPixelCoordinate = rightRect - bitMapArea.Left;
+            CorrectSideRect();
 
             scaleLeftTopPixelCoordinateRect = new SKPoint(scaleLeftPixelCoordinate * bitMapArea.ScaleWidth, (scaleTopPixelCoordinate * bitMapArea.ScaleHeight));
             scaleLeftBottomPixelCoordinateRect = new SKPoint(scaleLeftPixelCoordinate * bitMapArea.ScaleWidth, scaleBottomPixelCoordinate * bitMapArea.ScaleHeight);
             scaleRightTopPixelCoordinateRect = new SKPoint(scaleRightPixelCoordinate * bitMapArea.ScaleWidth, scaleTopPixelCoordinate * bitMapArea.ScaleHeight);
             scaleRightBottomPixelCoordinateRect = new SKPoint(scaleRightPixelCoordinate * bitMapArea.ScaleWidth, scaleBottomPixelCoordinate * bitMapArea.ScaleHeight);
+        }
+
+        private void CorrectSideRect()
+        {
+            float temp = 0;
+            if(scaleTopPixelCoordinate > scaleBottomPixelCoordinate)
+            {
+                temp = scaleTopPixelCoordinate;
+                scaleTopPixelCoordinate = scaleBottomPixelCoordinate;
+                scaleBottomPixelCoordinate = temp;
+            }
+            if(scaleLeftPixelCoordinate > scaleRightPixelCoordinate)
+            {
+                temp = scaleLeftPixelCoordinate;
+                scaleLeftPixelCoordinate = scaleRightPixelCoordinate;
+                scaleRightPixelCoordinate = temp;
+            }
         }
 
         public void CalculateOneRadiousCoordinate(Point coordinateDetected, SKCanvasView canvasBitMap)

@@ -13,7 +13,7 @@ namespace IMA
     {
 
         private static string defaultTempDirectory = System.IO.Path.GetTempPath();
-        private static string imageCompressDirectory = defaultTempDirectory + "compress.webp";
+        private static string imageCompressDirectory = defaultTempDirectory + "compress";
         private string JSONFileDirectory = defaultTempDirectory + "coordinate.txt";
         private static string URLSend = "http://127.0.0.1:5000/upload";
 
@@ -124,78 +124,68 @@ namespace IMA
 
         private void OnButtonClickProcessImage(object sender, EventArgs e)
         {
-            Boolean processComplete = CompressImage(CompressionAlgorithmSelectedMethods.AlgorithmSelected(algorithmList.SelectedItem), Convert.ToString(qualityAlgorithmEntry.Value));
-            Task userResponse;
-            if (!processComplete)
+            try
             {
-                userResponse = DisplayAlert("Errore di compressione", "Vi è stato un errore di compressione", "OK");
-                if (userResponse.IsCompleted)
-                {
-                    Navigation.RemovePage(this);
-                }
+                CompressionAlgorithmSelected compressionAlgorithmSelected = CompressionAlgorithmSelectedMethods.AlgorithmSelected(algorithmList.SelectedItem);
+                CompressImage(compressionAlgorithmSelected, Convert.ToString(qualityAlgorithmEntry.Value));
+                SendFileToServer(compressionAlgorithmSelected);
             }
-            else
+            catch(Exception ex)
             {
-                bool sendFile;
-                sendFile = SendFileToServer();
-                if (!sendFile)
-                {
-                    userResponse = DisplayAlert("Errore di invio", "Vi è stato un errore di invio", "OK");
-                    if (userResponse.IsCompleted)
-                    {
-                        Navigation.RemovePage(this);
-                    }
-                }
+                DisplayAlert("Errore", ex.Message, "OK");
             }
         }
 
-        private bool CompressImage(CompressionAlgorithmSelected info, string quality)
+        private void CompressImage(CompressionAlgorithmSelected info, string quality)
         {
             switch (info)
             {
                 case CompressionAlgorithmSelected.WEBPAlgorithm:
-                    int resultWEBP = DependencyService.Get<ICompressorAlgorithm>().CallWEBPCompressorAlgorithm(imageSource, imageCompressDirectory, quality);
-                    if (resultWEBP == 0)
+                    int resultWEBP = DependencyService.Get<ICompressorAlgorithm>().CallWEBPCompressorAlgorithm(imageSource, imageCompressDirectory + ".webp", quality);
+                    if (resultWEBP != 0)
                     {
-                        return true;
+                        throw new Exception("Errore di compressione");
                     }
-                    return false;
+                    break;
                 case CompressionAlgorithmSelected.JPEGAlgorithm:
-                    return JPEGCompressorAlgorithm.JPEGCompressor(imageSource, imageCompressDirectory, Convert.ToInt32(quality));
+                    if(!JPEGCompressorAlgorithm.JPEGCompressor(imageSource, imageCompressDirectory + ".jpg", Convert.ToInt32(quality)))
+                    {
+                        throw new Exception("Errore di compressione");
+                    }
+                    break;
                 case CompressionAlgorithmSelected.none:
-                    DisplayAlert("Errore selezione algoritmo di compressione'", "Selezionare algoritmo di compressione", "OK");
-                    return false;
+                    throw new Exception("Errore selezione algoritmo di compressione'");
             }
-            DisplayAlert("Errore selezione qualita'", "Selezionare qualita' valida", "OK");
-            return false;
         }
 
-        private bool SendFileToServer()
+        private void SendFileToServer(CompressionAlgorithmSelected compressionAlgorithmSelected)
         {
+            ImageExtension imageExtension = ImageExtensionMethods.GetImageExtension(compressionAlgorithmSelected);
             try
             {
                 CreateJSONFiles();
-                Send();
-                return true;
+                Send(imageExtension);
             }
             catch(Exception e)
             {
-                return false;
+                throw new Exception(e.Message);
             }
         }
 
-        private async void Send()
+        private async void Send(ImageExtension imageExtension)
         {
+            string extensionImage = ImageExtensionMethods.GetImageExtensionString(imageExtension);
             try
             {
-                var upImageBytes = File.ReadAllBytes(imageCompressDirectory);
+                var upImageBytes = File.ReadAllBytes(imageCompressDirectory + extensionImage);
                 var upJSONBytes = File.ReadAllBytes(JSONFileDirectory);
 
                 HttpClient client = new HttpClient();
                 MultipartFormDataContent content = new MultipartFormDataContent();
 
                 ByteArrayContent imageContent = new ByteArrayContent(upImageBytes);
-                content.Add(imageContent, "image", "image.webp");
+                string imageSendName = "image" + extensionImage;
+                content.Add(imageContent, "image", imageSendName);
 
                 ByteArrayContent JSONContent = new ByteArrayContent(upJSONBytes);
                 content.Add(JSONContent, "coordinate", "coordinate.txt");
@@ -208,12 +198,30 @@ namespace IMA
             }
             catch (Exception e)
             {
-                throw new Exception("Errore invio file");
+                await DisplayAlert("Errore invio file", "Errore connessione con il server " + e.Source, "OK");
             }
         }
 
         private void CreateJSONFiles()
+        { 
+            try
+            {
+                if (!File.Exists(defaultTempDirectory))
+                {
+                    CreateJSON();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Errore creazione file di testo " + e.Source);
+            }
+        }
+
+        private void CreateJSON()
         {
+            FileStream fs = null;
+            fs = File.Create(JSONFileDirectory);
+            StreamWriter sw = new StreamWriter(fs);
             if (CoordinateRectangleExist())
             {
                 List<JSONRectangleMapping> jsonRectangleMapping = new List<JSONRectangleMapping>();
@@ -222,46 +230,26 @@ namespace IMA
                     jsonRectangleMapping.Add(new JSONRectangleMapping(rectangleArea.Id, rectangleArea.ScaleLeftTopPixelCoordinate, rectangleArea.ScaleLeftBottomPixelCoordinate,
                                                 rectangleArea.ScaleRightTopPixelCoordinate, rectangleArea.ScaleRightBottomPixelCoordinate));
                 }
-                FileStream fs = null;
-                try
+                StringBuilder str = new StringBuilder();
+                str.Append("[");
+                int count = 0;
+                foreach (JSONRectangleMapping jsonRectangleMap in jsonRectangleMapping)
                 {
-                    if (!File.Exists(defaultTempDirectory))
+                    count++;
+                    str.Append(jsonRectangleMap.CreateJSONString());
+                    if (count != jsonRectangleMapping.Count)
                     {
-                        fs = File.Create(JSONFileDirectory);
-                        StreamWriter sw = new StreamWriter(fs);
-                        if (CoordinateRectangleExist())
-                        {
-                            StringBuilder str = new StringBuilder();
-                            str.Append("[");
-                            int count = 0;
-                            foreach (JSONRectangleMapping jsonRectangleMap in jsonRectangleMapping)
-                            {
-                                count++;
-                                str.Append(jsonRectangleMap.CreateJSONString());
-                                if(count != jsonRectangleMapping.Count)
-                                {
-                                    str.Append(",");
-                                }
-                            }
-                            str.Append("]");
-                            sw.WriteLine(str);
-                        }
-                        else
-                        {
-                            sw.WriteLine("User not select rectangle coordinate");
-                        }
-                        sw.Dispose();
+                        str.Append(",");
                     }
                 }
-                catch (Exception e)
-                {
-                    throw new Exception("Errore creazione file di testo");
-                }
+                str.Append("]");
+                sw.WriteLine(str);
             }
             else
             {
-                DisplayAlert("Nessun rettangolo creato", "Nessun rettangolo creato, verrà procecssata l'intera immagine", "OK");
+                sw.WriteLine("User not select rectangle coordinate");
             }
+            sw.Dispose();
         }
 
         private bool CoordinateRectangleExist()
