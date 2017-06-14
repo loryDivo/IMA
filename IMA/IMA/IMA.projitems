@@ -12,28 +12,26 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)src\BitMapArea.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)src\CompressionAlgorithmSelected.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)src\Display.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)src\ICompressorAlgorithm.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Element\BitMapArea.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Functions\CompressionAlgorithmSelected.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Element\Display.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Functions\ICompressorAlgorithm.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\IDevice\DeviceOrientations.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)src\IDevice\IDisplay.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)src\IDevice\IPicturePicker.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)src\IDevice\TouchActionEventArgs.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)src\IDevice\TouchActionEventHandler.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)src\IDevice\TouchActionType.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)src\IDevice\TouchEffect.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)src\ImageActionTools.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)src\ImageUtility.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)src\JPEGCompressorAlgorithm.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)src\JSONRectangleMapping.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)src\MainPage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)src\ModelExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)src\MovementInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)src\RectangleArea.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)src\RectangleShapeArea.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)src\Sender.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)src\UtilityFunctions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\IDevice\Touch\TouchActionEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\IDevice\Touch\TouchActionEventHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\IDevice\Touch\TouchActionType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\IDevice\Touch\TouchEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Page\ImageActionTools.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Enum\ImageUtility.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Functions\JPEGCompressorAlgorithm.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Element\JSONRectangleMapping.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Page\MainPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Enum\MovementInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Element\RectangleArea.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Element\RectangleShapeArea.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Page\Sender.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)src\Functions\UtilityFunctions.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)App.xaml">
@@ -47,5 +45,12 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)media\prova.jpg" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)media\rectangleArea.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)media\sea.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)src\Element\" />
+    <Folder Include="$(MSBuildThisFileDirectory)src\Enum\" />
+    <Folder Include="$(MSBuildThisFileDirectory)src\Functions\" />
+    <Folder Include="$(MSBuildThisFileDirectory)src\IDevice\Touch\" />
+    <Folder Include="$(MSBuildThisFileDirectory)src\Page\" />
   </ItemGroup>
 </Project>

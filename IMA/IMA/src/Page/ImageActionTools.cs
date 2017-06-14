@@ -5,7 +5,6 @@ using TouchTracking;
 using Xamarin.Forms;
 using System.Collections.Generic;
 using IMA.src;
-using System.Linq;
 
 namespace IMA
 {
@@ -120,7 +119,7 @@ namespace IMA
             this.ToolbarItems.Add(sendFile);
 
         }
-    
+
         private void EnableZoomAndPan()
         {
             gridLayout = new Grid();
@@ -145,6 +144,65 @@ namespace IMA
             }
             Content = gridLayout;
         }
+
+        private void AddRectangleIntoImageArea()
+        {
+            removeRectangleState = false;
+            actualScale = Scale;
+            Scale = MIN_SCALE;
+
+            rectangleInsertIDLayout = new StackLayout();
+
+            rectangleIDText = new Entry
+            {
+                Placeholder = "write rectangle ID",
+                WidthRequest = 250,
+                VerticalOptions = LayoutOptions.CenterAndExpand,
+                HorizontalOptions = LayoutOptions.Center,
+            };
+
+            Button btnConfirmID = new Button
+            {
+                Text = "Confirm",
+                Font = Font.SystemFontOfSize(NamedSize.Large),
+                BorderWidth = 1,
+                VerticalOptions = LayoutOptions.StartAndExpand,
+                HorizontalOptions = LayoutOptions.Center,
+            };
+
+            btnConfirmID.Clicked += OnButtonConfirmIDRectangleClicked;
+            rectangleInsertIDLayout.Children.Add(rectangleIDText);
+            rectangleInsertIDLayout.Children.Add(btnConfirmID);
+            rectangleInsertIDLayout.BackgroundColor = Color.Gray;
+
+            gridLayout.Children.Add(rectangleInsertIDLayout);
+        }
+
+        private void RemoveRectangleSelectedIntoImageArea()
+        {
+            if (removeRectangleState)
+            {
+                removeRectangleState = false;
+            }
+            else
+            {
+                removeRectangleState = true;
+                DisplayAlert("Selezionare rettangolo da rimuovere", "Selezionare rettangolo da rimuovere", "OK");
+            }
+        }
+
+        private void SendFileToCompressor()
+        {
+            if (ScaleRectCoordinate())
+            {
+                Navigation.PushAsync(new Sender(this, bitMapArea.BitMapDirectorySource, allRectangleArea));
+            }
+            else
+            {
+                Navigation.PushAsync(new Sender(this, bitMapArea.BitMapDirectorySource, null));
+            }
+        }
+
 
         private void OnPinchUpdated(object sender, PinchGestureUpdatedEventArgs e)
         {
@@ -182,16 +240,6 @@ namespace IMA
             }
         }
 
-        private T Clamp<T>(T value, T minimum, T maximum) where T : IComparable
-        {
-            if (value.CompareTo(minimum) < 0)
-                return minimum;
-            else if (value.CompareTo(maximum) > 0)
-                return maximum;
-            else
-                return value;
-        }
-
         private void OnPanUpdated(object sender, PanUpdatedEventArgs e)
         {
             switch (e.StatusType)
@@ -206,6 +254,17 @@ namespace IMA
                     break;
             }
         }
+
+        private T Clamp<T>(T value, T minimum, T maximum) where T : IComparable
+        {
+            if (value.CompareTo(minimum) < 0)
+                return minimum;
+            else if (value.CompareTo(maximum) > 0)
+                return maximum;
+            else
+                return value;
+        }
+
         private void OnCanvasViewBitMapImgSurface(object sender, SKPaintSurfaceEventArgs args)
         {
             SKImageInfo info = args.Info;
@@ -269,18 +328,6 @@ namespace IMA
             allRectangleArea.RemoveRange(0, allRectangleArea.Count);
         }
 
-        private void SendFileToCompressor()
-        {
-            if (ScaleRectCoordinate())
-            {
-                Navigation.PushAsync(new Sender(this, bitMapArea.BitMapDirectorySource, allRectangleArea));
-            }
-            else
-            {
-                Navigation.PushAsync(new Sender(this, bitMapArea.BitMapDirectorySource, null));
-            }
-        }
-
         private bool ScaleRectCoordinate()
         {
             if (allRectangleArea.Count > 0)
@@ -295,52 +342,6 @@ namespace IMA
             {
                 DisplayAlert("Nessuna selezione", "Non è stata selezionata nessuna area, il server elaborerà tutta la foto", "OK");
                 return false;
-            }
-        }
-
-        private void AddRectangleIntoImageArea()
-        {
-            removeRectangleState = false;
-            actualScale = Scale;
-            Scale = MIN_SCALE;
-
-            rectangleInsertIDLayout = new StackLayout();
-
-            rectangleIDText = new Entry
-            {
-                Placeholder = "write rectangle ID",
-                WidthRequest = 250,
-                VerticalOptions = LayoutOptions.CenterAndExpand,
-                HorizontalOptions = LayoutOptions.Center,
-            };
-
-            Button btnConfirmID = new Button
-            {
-                Text = "Confirm",
-                Font = Font.SystemFontOfSize(NamedSize.Large),
-                BorderWidth = 1,
-                VerticalOptions = LayoutOptions.StartAndExpand,
-                HorizontalOptions = LayoutOptions.Center,
-            };
-
-            btnConfirmID.Clicked += OnButtonConfirmIDRectangleClicked;
-            rectangleInsertIDLayout.Children.Add(rectangleIDText);
-            rectangleInsertIDLayout.Children.Add(btnConfirmID);
-            rectangleInsertIDLayout.BackgroundColor = Color.Gray;
-
-            gridLayout.Children.Add(rectangleInsertIDLayout);
-        }
-
-        private void RemoveRectangleSelectedIntoImageArea()
-        {
-            if (removeRectangleState)
-            {
-                removeRectangleState = false;
-            }
-            else
-            {
-                removeRectangleState = true;
-                DisplayAlert("Selezionare rettangolo da rimuovere", "Selezionare rettangolo da rimuovere", "OK");
             }
         }
 

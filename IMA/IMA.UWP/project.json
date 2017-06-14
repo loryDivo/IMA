@@ -6,6 +6,7 @@
     "SkiaSharp.Views": "1.58.0",
     "SkiaSharp.Views.Forms": "1.58.0",
     "System.Net.Http": "4.3.2",
+    "Xam.Plugin.Media": "2.6.2",
     "Xamarin.Forms": "2.3.4.224"
   },
   "frameworks": {

@@ -4,6 +4,8 @@ using Xamarin.Forms;
 using System.IO;
 using IMA.src.IDevice;
 using IMA.src;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
 
 namespace IMA
 {
@@ -105,13 +107,12 @@ namespace IMA
         //TODO REFACTORING
         async void OnButtonClickedTapPhotos(object sender, EventArgs e)
         {
-            /*
            await CrossMedia.Current.Initialize();
 
             Image imageTapped = new Image();
             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
             {
-                //DisplayAlert("No Camera", "There is no camera available.", "OK");
+                DisplayAlert("No Camera", "There is no camera available.", "OK");
                 return;
             }
 
@@ -119,19 +120,7 @@ namespace IMA
             {
                 SaveToAlbum = true,
             });
-            if (file == null)
-            {
-                return;
-            }
-
-            imageTapped.Source = ImageSource.FromStream(() =>
-            {
-                var stream = file.GetStream();
-                file.Dispose();
-                return stream;
-            });
-            CallImageActionTools();
-            */
+            return;
             
         }
 

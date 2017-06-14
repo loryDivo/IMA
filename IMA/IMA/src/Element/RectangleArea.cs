@@ -71,19 +71,19 @@ namespace IMA.src
         public float OffSetRectHeight { get => offSetRectHeight; set => offSetRectHeight = value; }
         public bool ResizeMove { get => resizeMove; set => resizeMove = value; }
         public ResizeInfo ResizeInfo { get => resizeInfo; set => resizeInfo = value; }
-        public SKPoint LeftTopPixelCoordinate { get => leftTopPixelCoordinateRect; set => leftTopPixelCoordinateRect = value; }
-        public SKPoint LeftBottomPixelCoordinate { get => leftBottomPixelCoordinateRect; set => leftBottomPixelCoordinateRect = value; }
-        public SKPoint RightTopPixelCoordinate { get => rightTopPixelCoordinateRect; set => rightTopPixelCoordinateRect = value; }
-        public SKPoint RightBottomPixelCoordinate { get => rightBottomPixelCoordinateRect; set => rightBottomPixelCoordinateRect = value; }
-        public SKPoint OneRadiousPixelCoordinate { get => oneRadiousPixelCoordinate; set => oneRadiousPixelCoordinate = value; }
-        public SKPoint PixelCoordinateDetected { get => coordinatePixelDetected; set => coordinatePixelDetected = value; }
-        public SKPoint ScaleLeftTopPixelCoordinate { get => scaleLeftTopPixelCoordinateRect; set => scaleLeftTopPixelCoordinateRect = value; }
-        public SKPoint ScaleLeftBottomPixelCoordinate { get => scaleLeftBottomPixelCoordinateRect; set => scaleLeftBottomPixelCoordinateRect = value; }
-        public SKPoint ScaleRightTopPixelCoordinate { get => scaleRightTopPixelCoordinateRect; set => scaleRightTopPixelCoordinateRect = value; }
-        public SKPoint ScaleRightBottomPixelCoordinate { get => scaleRightBottomPixelCoordinateRect; set => scaleRightBottomPixelCoordinateRect = value; }
-        public SKPaint PaintRect { get => paintRect; set => paintRect = value; }
+        public SKPoint LeftTopPixelCoordinate { get => leftTopPixelCoordinateRect; }
+        public SKPoint LeftBottomPixelCoordinate { get => leftBottomPixelCoordinateRect; }
+        public SKPoint RightTopPixelCoordinate { get => rightTopPixelCoordinateRect; }
+        public SKPoint RightBottomPixelCoordinate { get => rightBottomPixelCoordinateRect; }
+        public SKPoint OneRadiousPixelCoordinate { get => oneRadiousPixelCoordinate; }
+        public SKPoint PixelCoordinateDetected { get => coordinatePixelDetected; }
+        public SKPoint ScaleLeftTopPixelCoordinate { get => scaleLeftTopPixelCoordinateRect; }
+        public SKPoint ScaleLeftBottomPixelCoordinate { get => scaleLeftBottomPixelCoordinateRect; }
+        public SKPoint ScaleRightTopPixelCoordinate { get => scaleRightTopPixelCoordinateRect; }
+        public SKPoint ScaleRightBottomPixelCoordinate { get => scaleRightBottomPixelCoordinateRect; }
+        public SKPaint PaintRect { get => paintRect; }
         public bool RectangleSelected { get => rectangleSelected; set => rectangleSelected = value; }
-        public String Id { get => id; set => id = value; }
+        public String Id { get => id; }
         public SKPaint PaintIDRect { get => paintIDRect; }
         public SKPoint PositionIDRect { get => positionIDRect; }
 
@@ -133,8 +133,8 @@ namespace IMA.src
 
         public void CalculateOneRadiousCoordinate(Point coordinateDetected, SKCanvasView canvasBitMap)
         {
-            OneRadiousPixelCoordinate = new SKPoint(Left + RadiousOfCircleRect, Top + RadiousOfCircleRect);
-            PixelCoordinateDetected = UtilityFunctions.ConvertToPixel(new Point(coordinateDetected.X, coordinateDetected.Y), canvasBitMap);
+            oneRadiousPixelCoordinate = new SKPoint(Left + RadiousOfCircleRect, Top + RadiousOfCircleRect);
+            coordinatePixelDetected = UtilityFunctions.ConvertToPixel(new Point(coordinateDetected.X, coordinateDetected.Y), canvasBitMap);
         }
 
         public bool CheckIfInAnyRectangle(SKPoint pointPixel)

@@ -21,10 +21,10 @@ namespace IMA.src
 
         public float PrevRatio { get => prevRatio; set => prevRatio = value; }
         public float AspectRatio { get => aspectRatio; set => aspectRatio = value; }
-        public float Left { get => left; set => left = value; }
-        public float Right { get => right; set => right = value; }
-        public float Bottom { get => bottom; set => bottom = value; }
-        public float Top { get => top; set => top = value; }
+        public float Left { get => left; }
+        public float Right { get => right; }
+        public float Bottom { get => bottom; }
+        public float Top { get => top; }
 
         public void CalculateDisplayVertexPixelCoordinate(SKImageInfo info)
         {
