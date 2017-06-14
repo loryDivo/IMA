@@ -245,7 +245,9 @@ namespace IMA
                     canvas.DrawCircle(rectangleArea.Right, rectangleArea.Bottom, rectangleArea.RadiousOfCircleRect, paintResizeRectSelectionArea);
                     rectangleArea.ResizeMove = false;
                 }
+                rectangleArea.CalculateNewPositionIDRect();
                 canvas.DrawRect(rectSelectionArea, rectangleArea.PaintRect);
+                canvas.DrawText(rectangleArea.Id, rectangleArea.PositionIDRect.X, rectangleArea.PositionIDRect.Y, rectangleArea.PaintIDRect);
             }
         }
 
@@ -348,22 +350,12 @@ namespace IMA
             {
                 gridLayout.Children.Remove(rectangleInsertIDLayout);
 
-                byte[] buffer = new byte[4];
-                new Random().NextBytes(buffer);
-
-                RectangleArea rectangleArea = new RectangleArea(rectangleIDText.Text, new SKPaint
-                {
-                    Color = new SKColor(buffer[0], buffer[1], buffer[2], buffer[3]),
-                    Style = SKPaintStyle.Stroke,
-                    StrokeWidth = 5
-
-                });
+                RectangleArea rectangleArea = new RectangleArea(rectangleIDText.Text);
 
                 rectangleArea.Top = bitMapArea.Top;
                 rectangleArea.Left = bitMapArea.Left;
                 rectangleArea.Right = rectangleArea.Left + rectangleArea.OffSetRectWidth;
                 rectangleArea.Bottom = rectangleArea.Top + rectangleArea.OffSetRectHeight;
-
                 allRectangleArea.Add(rectangleArea);
 
                 Scale = actualScale;

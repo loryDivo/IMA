@@ -2,7 +2,6 @@
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using Xamarin.Forms;
-
 namespace IMA.src
 {
     public class RectangleArea : RectangleShapeArea
@@ -32,6 +31,8 @@ namespace IMA.src
         private SKPoint scaleRightTopPixelCoordinateRect;
         private SKPoint scaleRightBottomPixelCoordinateRect;
 
+        private SKPoint positionIDRect;
+
         private float scaleTopPixelCoordinate;
         private float scaleBottomPixelCoordinate;
         private float scaleLeftPixelCoordinate;
@@ -39,11 +40,26 @@ namespace IMA.src
 
         private bool rectangleSelected = false;
         private SKPaint paintRect;
+        private SKPaint paintIDRect;
 
-        public RectangleArea(String idRect, SKPaint paintRect)
+        public RectangleArea(String idRect)
         {
             this.id = idRect;
-            this.PaintRect = paintRect;
+
+            byte[] buffer = new byte[4];
+            new Random().NextBytes(buffer);
+            this.paintRect = new SKPaint
+            {
+                Color = new SKColor(buffer[0], buffer[1], buffer[2], buffer[3]),
+                Style = SKPaintStyle.Stroke,
+                StrokeWidth = 5,
+            };
+
+            this.paintIDRect = new SKPaint
+            {
+                Color = new SKColor(0, 0, 0),
+                TextSize = 15,
+            };
         }
 
         public float RadiousOfCircleRect { get => radiousOfCircleRect; set => radiousOfCircleRect = value; }
@@ -68,6 +84,8 @@ namespace IMA.src
         public SKPaint PaintRect { get => paintRect; set => paintRect = value; }
         public bool RectangleSelected { get => rectangleSelected; set => rectangleSelected = value; }
         public String Id { get => id; set => id = value; }
+        public SKPaint PaintIDRect { get => paintIDRect; }
+        public SKPoint PositionIDRect { get => positionIDRect; }
 
         public void CalculateVertexCoordinate()
         {
@@ -75,6 +93,11 @@ namespace IMA.src
             rightTopPixelCoordinateRect = new SKPoint(Right, Top);
             leftBottomPixelCoordinateRect = new SKPoint(Left, Bottom);
             rightBottomPixelCoordinateRect = new SKPoint(Right, Bottom);
+        }
+
+        public void CalculateNewPositionIDRect()
+        {
+            positionIDRect = new SKPoint(this.rightRect - OffSetRectWidth / 2 - (paintIDRect.MeasureText(id) / 2), this.topRect - 10);
         }
 
         public void CalculateScaleVertexCoordinate(BitMapArea bitMapArea)
