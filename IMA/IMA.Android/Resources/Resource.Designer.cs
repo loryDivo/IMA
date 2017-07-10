@@ -2156,7 +2156,7 @@ namespace IMA.Droid
 			public const int Icon = 2130837649;
 			
 			// aapt resource value: 0x7f020092
-			public const int mare = 2130837650;
+			public const int Logo = 2130837650;
 			
 			// aapt resource value: 0x7f020093
 			public const int mr_dialog_material_background_dark = 2130837651;

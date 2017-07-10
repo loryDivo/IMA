@@ -58,11 +58,10 @@ namespace IMA
 
             imageDefault = new Image
             {
-                Source = ImageSource.FromFile("mare.jpg"),
-                VerticalOptions = LayoutOptions.CenterAndExpand,
+                Source = ImageSource.FromFile("Logo.jpg"),
+                VerticalOptions = LayoutOptions.Center,
 
             };
-
             StackLayout mainLayout = new StackLayout();
             ScrollView scrollView = new ScrollView();
 

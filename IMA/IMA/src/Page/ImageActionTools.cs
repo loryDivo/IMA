@@ -320,6 +320,7 @@ namespace IMA
             {
                 // CHANGE SCALE ?????
                 RescaleRectangleCoordinate();
+                display.PrevRatio = display.AspectRatio;
             }
         }
 
