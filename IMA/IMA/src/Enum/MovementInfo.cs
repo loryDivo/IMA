@@ -3,6 +3,9 @@ using System;
 
 namespace IMA
 {
+    /*
+     * Classe enum per vari casi di ridimensionamento e movimento
+     */
     public enum MovimentInfo
     {
         InsideArea,
@@ -26,7 +29,9 @@ namespace IMA
         none,
     }
 
-
+    /*
+     * Controllo se è un resize mediante distanza euclidea
+     */
     public static class MovimentMethods
     {
 
@@ -76,6 +81,10 @@ namespace IMA
         {
             return (float)Math.Sqrt(Math.Pow((coordinate1 - coordinate2), 2));
         }
+
+        /*
+         * Controllo per verificare da che parte è presente il ridimensiomanto
+        */
 
         private static ResizeInfo CheckMinDistanceCoordinate(double minimumDistanceDetected, double distanceLeftTopCoordinate,
                                                              double distanceLeftBottomCoordinate, double distanceRightTopCoordinate,

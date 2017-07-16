@@ -5,6 +5,11 @@ using SkiaSharp;
 
 namespace IMA.src
 {
+
+    /*
+     * Oggetto per creare un file in formato JSON
+     * con all'interno l'ID delle varie bounding box e le coordinate ricavate
+    */ 
     public class JSONRectangleMapping
     {
         private String idInfo;
@@ -42,6 +47,9 @@ namespace IMA.src
             rightBottomRectangleCoordinate = rightBottomCoordinate;
         }
 
+        /*
+         * Creazione stringa in formato JSON 
+         */
         public String CreateJSONString()
         {
             StringBuilder str = new StringBuilder();

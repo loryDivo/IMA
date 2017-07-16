@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using IMA.src.IDevice;
+﻿using IMA.src.IDevice;
 using SkiaSharp;
 using Xamarin.Forms;
 
 namespace IMA.src
 {
+
+    /*
+     * Rappresentazione dell'immagine principale
+     * Sono presenti i vari attributi che rappresentano le coordinate dell'immagine sia 
+     * su schermo che reali (per compressione)
+     */
     public class BitMapArea : RectangleShapeArea
     {
         private string bitMapDirectorySource;
@@ -53,6 +56,9 @@ namespace IMA.src
         public float PreviousScaleHeight { get => previousScaleHeight; }
         public float PreviousScaleWidth { get => previousScaleWidth; }
 
+        /*
+         * Calcolo coordinate vertici
+         */
         public void CalculateVertexCoordinate()
         {
             leftTopPixelCoordinateBitMap = new SKPoint(Left, Top);
@@ -61,6 +67,9 @@ namespace IMA.src
             rightBottomPixelCoordinateBitMap = new SKPoint(Right, Bottom);
         }
 
+        /*
+         * Calcolo grandezza bitmap
+         */
         public void CalculateBitMapSize(SKImageInfo info, Display display)
         {
             Left = (info.Width - display.AspectRatio * BitMap.Width) / 2;

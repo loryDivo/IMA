@@ -5,6 +5,9 @@ using IMA.UWP;
 [assembly: Xamarin.Forms.Dependency(typeof(CompressorAlgorithm_UWP))]
 namespace IMA.UWP
 {
+  /*
+  * Classe wrapping compressione UWP
+  */
     public class CompressorAlgorithm_UWP : ICompressorAlgorithm
     {
         public int CallWEBPCompressorAlgorithm(string imageSource, string imageDestination, string quality)

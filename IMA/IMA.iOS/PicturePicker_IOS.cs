@@ -10,6 +10,9 @@ using Xamarin.Forms;
 [assembly: Dependency(typeof(PicturePicker_IOS))]
 namespace IMA.IOS
 {
+  /*
+  * Classe chiamata galleria iOS
+  */
     public class PicturePicker_IOS : IPicturePicker
     {
         TaskCompletionSource<Stream> taskCompletionSource;

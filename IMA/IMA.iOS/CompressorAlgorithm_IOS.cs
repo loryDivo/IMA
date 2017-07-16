@@ -4,6 +4,9 @@ using System.Runtime.InteropServices;
 [assembly: Xamarin.Forms.Dependency(typeof(CompressorAlgorithm_IOS))]
 namespace IMA.IOS
 {
+  /*
+  * Classe wrapping compressione iOS
+  */
     public class CompressorAlgorithm_IOS : ICompressorAlgorithm
     {
         public int CallWEBPCompressorAlgorithm(string imageSource, string imageDestination, string quality)

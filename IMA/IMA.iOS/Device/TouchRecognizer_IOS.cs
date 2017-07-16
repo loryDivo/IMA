@@ -9,6 +9,9 @@ using Foundation;
 using UIKit;
 namespace TouchTracking.IOS
 {
+ /*
+ * Classe calcolo coordinate schermo iOS
+ */
     class TouchRecognizer_IOS : UIGestureRecognizer
     {
         Element element;        // Forms element for firing events

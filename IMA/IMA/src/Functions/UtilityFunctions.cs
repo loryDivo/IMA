@@ -4,6 +4,9 @@ using Xamarin.Forms;
 
 namespace IMA
 {
+    /*
+     * Classe per calcolo varie funzionalità
+     */
     public static class UtilityFunctions
     {
         public static SKPoint ConvertToPixel(Point pt, SKCanvasView canvasBitMap)

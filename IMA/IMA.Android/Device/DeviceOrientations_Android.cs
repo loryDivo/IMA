@@ -8,6 +8,9 @@ using Xamarin.Forms;
 
 namespace IMA.Droid
 {
+  /*
+  * Classe orientamento device Android
+  */
     public class DeviceOrientations_Android : IDeviceOrientation
     {
         public DeviceOrientations_Android()

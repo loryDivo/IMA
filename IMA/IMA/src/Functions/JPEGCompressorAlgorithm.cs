@@ -4,6 +4,9 @@ using System.IO;
 using BitMiracle.LibJpeg;
 using BitMiracle.LibJpeg.Classic;
 
+    /*
+     * Classe per chiamata ad algoritmo JPEG di compressione
+     */
 
 public static class JPEGCompressorAlgorithm
 {

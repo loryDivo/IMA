@@ -10,6 +10,9 @@ using UIKit;
 [assembly: ExportEffect(typeof(TouchTracking.IOS.TouchEffect_IOS), "TouchEffect")]
 namespace TouchTracking.IOS
 {
+  /*
+  * Classe chiamata galleria iOS
+  */
     public class TouchEffect_IOS : PlatformEffect
     {
         UIView view;

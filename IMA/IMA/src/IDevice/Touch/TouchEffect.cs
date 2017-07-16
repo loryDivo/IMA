@@ -2,6 +2,9 @@
 
 namespace TouchTracking
 {
+    /*
+     * Classe che richiama gli effect di ogni singola piattaforma (per ricavare coordinate touch)
+     */
     public class TouchEffect : RoutingEffect
     {
         public event TouchActionEventHandler TouchAction;

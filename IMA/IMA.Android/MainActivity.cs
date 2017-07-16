@@ -29,6 +29,10 @@ namespace IMA.Droid
 
         public TaskCompletionSource<Stream> PickImageTaskCompletionSource { set; get; }
 
+/*
+* Metodo per ricavare URL immagine dalla galleria
+*/
+
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent intent)
         {
             base.OnActivityResult(requestCode, resultCode, intent);

@@ -11,6 +11,11 @@ using Xamarin.Forms;
 [assembly: Dependency(typeof(PicturePicker_UWP))]
 namespace IMA.UWP
 {
+
+  /*
+  * Classe chiamata galleria UWP
+  */
+
     public class PicturePicker_UWP : IPicturePicker
     {
         private string imagePath;

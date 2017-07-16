@@ -4,6 +4,10 @@ using SkiaSharp.Views.Forms;
 using Xamarin.Forms;
 namespace IMA.src
 {
+    /*
+     * Oggetto rappresentante la singola bounding box
+     * possiede tutti gli attributi per disegnarla su schermo
+     */ 
     public class RectangleArea : RectangleShapeArea
     {
         private String id;

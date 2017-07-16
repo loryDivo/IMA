@@ -9,6 +9,9 @@ using Plugin.Media.Abstractions;
 
 namespace IMA
 {
+    /*
+    * Pagina iniziale, ospita i vari botton per scattare una foto o caricarla dalla galleria
+    */
     public class MainPage : ContentPage
     {
         private Image imageDefault;

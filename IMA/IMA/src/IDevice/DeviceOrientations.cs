@@ -4,6 +4,9 @@ using System.Text;
 
 namespace IMA
 {
+    /*
+     * Classe enum per orientamento device
+     */
     public enum DeviceOrientations
     {
         Undefined,

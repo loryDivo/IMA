@@ -9,6 +9,9 @@ using System.Text;
 
 namespace IMA
 {
+    /*
+    * Pagina dedicata alla compressione e invio
+    */
     public class Sender : ContentPage
     {
 
@@ -122,6 +125,10 @@ namespace IMA
 
         }
 
+    /*
+    * Avvio compressione e invio
+    */
+
         private void OnButtonClickProcessImage(object sender, EventArgs e)
         {
             try
@@ -135,6 +142,10 @@ namespace IMA
                 DisplayAlert("Errore", ex.Message, "OK");
             }
         }
+
+    /*
+    * Avvio compressione in base ad algoritmo scelto
+    */
 
         private void CompressImage(CompressionAlgorithmSelected info, string quality)
         {
@@ -157,6 +168,10 @@ namespace IMA
                     throw new Exception("Errore selezione algoritmo di compressione'");
             }
         }
+
+    /*
+    * Invio file al server in base ad algoritmo scelto
+    */
 
         private void SendFileToServer(CompressionAlgorithmSelected compressionAlgorithmSelected)
         {
@@ -201,6 +216,10 @@ namespace IMA
                 await DisplayAlert("Errore invio file", "Errore connessione con il server " + e.Source, "OK");
             }
         }
+
+    /*
+    * Creazione file JSON con informazioni bounding box
+    */
 
         private void CreateJSONFiles()
         { 

@@ -12,6 +12,9 @@ using Android.Views;
 
 namespace TouchTracking.Droid
 {
+  /*
+  * Classe calcolo coordinate schermo Android
+  */
     public class TouchEffect_Android : PlatformEffect
     {
         Android.Views.View view;

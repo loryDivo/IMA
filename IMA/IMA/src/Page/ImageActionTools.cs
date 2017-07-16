@@ -8,6 +8,9 @@ using IMA.src;
 
 namespace IMA
 {
+    /*
+     * Classe per la gestioen dell'immagine
+     */
     public class ImageActionTools : ContentPage
     {
         
@@ -51,6 +54,10 @@ namespace IMA
             ToolbarAdd();
         }
 
+     /*
+     * Inizializzazione schermata dispositivo
+     */
+
         private void InizializeComponent(SKBitmap bitMap)
         {
             display = new Display();
@@ -82,7 +89,9 @@ namespace IMA
             Content = gridLayout;
 
         }
-
+     /*
+     * Riempimento toolbar
+     */
         private void ToolbarAdd()
         {
             ToolbarItem enableZoomAndPan = new ToolbarItem()
@@ -119,7 +128,9 @@ namespace IMA
             this.ToolbarItems.Add(sendFile);
 
         }
-
+     /*
+     * Avvio zoom e panning
+     */
         private void EnableZoomAndPan()
         {
             gridLayout = new Grid();
@@ -144,6 +155,10 @@ namespace IMA
             }
             Content = gridLayout;
         }
+
+    /*
+     * Aggiunta rettangolo all'interno dell'immagine
+     */
 
         private void AddRectangleIntoImageArea()
         {
@@ -178,6 +193,9 @@ namespace IMA
             gridLayout.Children.Add(rectangleInsertIDLayout);
         }
 
+     /*
+     * Rimozione rettangolo
+     */
         private void RemoveRectangleSelectedIntoImageArea()
         {
             if (removeRectangleState)
@@ -190,7 +208,9 @@ namespace IMA
                 DisplayAlert("Selezionare rettangolo da rimuovere", "Selezionare rettangolo da rimuovere", "OK");
             }
         }
-
+     /*
+     * Metodo di gestione invio file e compressione
+     */
         private void SendFileToCompressor()
         {
             if (ScaleRectCoordinate())
@@ -203,7 +223,9 @@ namespace IMA
             }
         }
 
-
+     /*
+     * Metodo per zoom sull'immagine
+     */
         private void OnPinchUpdated(object sender, PinchGestureUpdatedEventArgs e)
         {
             switch (e.Status)
@@ -240,6 +262,10 @@ namespace IMA
             }
         }
 
+     /*
+     * Metodo movimento pan lungo l'immagine
+     */
+
         private void OnPanUpdated(object sender, PanUpdatedEventArgs e)
         {
             switch (e.StatusType)
@@ -265,6 +291,9 @@ namespace IMA
                 return value;
         }
 
+     /*
+     * Tela di disegno, disegna tutti gli elementi presenti nel Canvas
+     */
         private void OnCanvasViewBitMapImgSurface(object sender, SKPaintSurfaceEventArgs args)
         {
             SKImageInfo info = args.Info;
@@ -310,6 +339,10 @@ namespace IMA
             }
         }
 
+     /*
+     * Metodo che in base al canvas modifica tutti gli elementi presenti -> da IMPLEMENTARE OPPORTUNAMENTE
+     */
+
         private void DisplayChange(SKCanvas canvas)
         {
             if (display.PrevRatio == 0)
@@ -324,11 +357,19 @@ namespace IMA
             }
         }
 
+     /*
+     * Rimozione tutte bounding box
+     */
+
         private void RescaleRectangleCoordinate()
         {
             allRectangleArea.RemoveRange(0, allRectangleArea.Count);
         }
 
+
+     /*
+     * Calcolo coordinate di ogni bounding box
+     */
         private bool ScaleRectCoordinate()
         {
             if (allRectangleArea.Count > 0)
@@ -345,6 +386,10 @@ namespace IMA
                 return false;
             }
         }
+
+     /*
+     * Conferma inserimento ID e creazione rettangolo
+     */
 
         private void OnButtonConfirmIDRectangleClicked(object sender, EventArgs e)
         {
@@ -369,6 +414,7 @@ namespace IMA
             }
         }
 
+
         private bool DupplicatedIDValue(string idNewRect)
         {
             foreach (RectangleArea rectangleArea in allRectangleArea)
@@ -381,6 +427,10 @@ namespace IMA
             return false;
         }
 
+
+     /*
+     * Event touch su schermo con relativi casi per la bounding box
+     */
         private void OnTouchEffectAction(object sender, TouchActionEventArgs args)
         {
 
@@ -442,6 +492,10 @@ namespace IMA
             }
         }
 
+     /*
+     * Metodo di controllo attività di ridimensionamento bounding box
+     */
+
         private ResizeInfo CheckIfResize(Point coordinateDetected, RectangleArea rectangleArea)
         {
 
@@ -454,6 +508,10 @@ namespace IMA
 
             return resizeDetected;
         }
+
+     /*
+     * Metodo resize bounding box con chiamata al vertice in questione
+     */
 
         private void ResizeRect(SKPoint coordinatePixelDetected, ResizeInfo resizeDetected, RectangleArea rectangleArea)
         {
@@ -486,6 +544,10 @@ namespace IMA
             canvasBitMap.InvalidateSurface();
         }
 
+     /*
+     * Resize a sinistra in alto
+     */
+
         private void LeftTopResizeCase(SKPoint coordinatePixelDetected, MovimentInfo resizeMovimentDetected, RectangleArea rectangleArea)
         {
 
@@ -513,6 +575,9 @@ namespace IMA
             }
         }
 
+    /*
+    * Resize a sinistra in basso
+    */
 
         private void LeftBottomResizeCase(SKPoint coordinatePixelDetected, MovimentInfo resizeMovimentDetected, RectangleArea rectangleArea)
         {
@@ -541,6 +606,10 @@ namespace IMA
             }
         }
 
+    /*
+    * Resize a destra in alto
+    */
+
         private void RightTopResizeCase(SKPoint coordinatePixelDetected, MovimentInfo resizeMovimentDetected, RectangleArea rectangleArea)
         {
             switch (resizeMovimentDetected)
@@ -566,6 +635,10 @@ namespace IMA
                     break;
             }
         }
+
+    /*
+    * Resize a destra in basso
+    */
 
         private void RightBottomResizeCase(SKPoint coordinatePixelDetected, MovimentInfo resizeMovimentDetected, RectangleArea rectangleArea)
         {
@@ -593,7 +666,10 @@ namespace IMA
             }
         }
 
-
+    /*
+    * Metodo per la gestione del movimento del rettangolo mediante la gesture "pan" con contemplazione dei 
+    * vari casi presenti e conseguente ricalcolo delle varie coordinate
+    */
 
         private void RectangleMoveArea(Point pointMove, RectangleArea rectangleArea)
         {

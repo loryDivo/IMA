@@ -5,6 +5,10 @@ using SkiaSharp;
 
 namespace IMA.src
 {
+    /*
+     * Rappresentazione display, server per ricalcolare le coordinate in pixel e il ratio
+     * per la rappresentazione delle varie figure
+     */
     public class Display
     {
         private float prevRatio;
@@ -26,6 +30,9 @@ namespace IMA.src
         public float Bottom { get => bottom; }
         public float Top { get => top; }
 
+        /*
+         * Calcolo coordinate display
+         */ 
         public void CalculateDisplayVertexPixelCoordinate(SKImageInfo info)
         {
             left = 0;

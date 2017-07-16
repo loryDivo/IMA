@@ -9,6 +9,9 @@ using Xamarin.Forms;
 
 namespace IMA.Droid
 {
+  /*
+  * Classe chiamata galleria Android
+  */
     public class PicturePicker_Android : IPicturePicker
     {
         public Task<Stream> GetImageStreamAsync()

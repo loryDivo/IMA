@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using SkiaSharp;
+﻿using SkiaSharp;
 
 namespace IMA.src
 {
+
+    /*
+     * Interfaccia con attributi comuni
+     */
     public interface RectangleShapeArea
     {
         float Top { get; set; }

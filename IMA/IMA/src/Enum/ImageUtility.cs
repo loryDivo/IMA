@@ -1,6 +1,10 @@
 ﻿
 namespace IMA.src
 {
+    /*
+     * Classe enum per scelta delle estensioni degli algoritmi di compressione
+     */ 
+
     public enum ImageExtension
     {
         JPEG,
@@ -20,6 +24,11 @@ namespace IMA.src
             }
             return ImageExtension.none;
         }
+
+     /*
+     * Data estensione restituisce estensione in formato string
+     */
+
         public static string GetImageExtensionString(this ImageExtension imageExtension)
         {
             switch (imageExtension)

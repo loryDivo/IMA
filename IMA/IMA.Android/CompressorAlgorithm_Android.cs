@@ -9,6 +9,9 @@ using System;
 [assembly: Dependency(typeof(CompressorAlgorithm_Android))]
 namespace IMA.Droid
 {
+    /*
+    * Classe wrapping compressione Android
+    */
     public class CompressorAlgorithm_Android : ICompressorAlgorithm
     {
         public int CallWEBPCompressorAlgorithm(string imageSource, string imageDestination, string quality)

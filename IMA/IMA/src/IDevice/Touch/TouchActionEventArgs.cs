@@ -3,6 +3,9 @@ using Xamarin.Forms;
 
 namespace TouchTracking
 {
+    /*
+     * Event handler touch su schermo
+     */
     public class TouchActionEventArgs : EventArgs
     {
         public TouchActionEventArgs(long id, TouchActionType type, Point location, bool isInContact)

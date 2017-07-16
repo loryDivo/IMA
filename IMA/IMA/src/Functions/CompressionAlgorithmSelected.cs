@@ -1,6 +1,11 @@
 ﻿
 namespace IMA.src
 {
+
+    /*
+     * Classe enum per scelta degli algoritmi di compressione
+     */
+
     public enum CompressionAlgorithmSelected
     {
         WEBPAlgorithm,

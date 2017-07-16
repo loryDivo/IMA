@@ -12,6 +12,9 @@ using Xamarin.Forms.Platform.UWP;
 
 namespace TouchTracking.UWP
 {
+ /*
+ * Classe calcolo coordinate schermo UWP
+ */
     public class TouchEffect_UWP : PlatformEffect
     {
         FrameworkElement frameworkElement;
