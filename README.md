@@ -1,39 +1,39 @@
-# IMA
-applicazione di gestione immagini cross platform
+# IMA (Image Management Application)
+Cross-platform application dedicated to the management of digital images
 
-IDE utilizzato Visual Studio 2015 / 2017
+IDE used: Visual Studio 2015 / 2017
 
-Requisiti per avvio:
+Requirements for starting up client APP:
 - Xamarin;
-- strumento compilazione librerie cross platform c++ / c;
+- C++ / c compiler istruments;
 Android:
-  - SDK Android (Emulatori etc.);
+  - SDK Android (Emulator etc.);
 UWP:
-  - SDK UWP (Emulatori etc.).
+  - SDK UWP (Emulator etc.).
 iOS:
-  - piattaforma Apple ospitante MacOS Sierra o successive;
+  - Apple platform that host MacOS;
   - SDK iOS;
   - XCode;
-  - Xamarin per MacOS.
+  - Xamarin for MacOS.
 
-Requisiti avvio server APP:
+Requirements for starting up server APP:
 - Python;
 - framework Flask.
 
 Istruzioni
 
-Per poter avviare l'applicativo è necessario scaricare L'IDE Visual Studio dal sito ufficiale. 
-All'avvio del tool di installazione sarà possibile scegliere i pacchetti da installare (illustrati nella sezione Requsiti).
+To start the application you need to download the Visual Studio IDE from the official website.
+When the installation tool is started, it will be possible to choose the packages to install (shown in the Requsiti section).
 
 Android / UWP
 
-è sufficiente scaricare e installare gli strumenti SDK per le piattaforme. Successivamente basterà emulare l'applicativo selezionando il progetto opportuno.
+Simply download and install the SDK tools for the platforms. Subsequently it will be sufficient to emulate the application by selecting the appropriate project.
 
 iOS
-Per poter emulare l'applicativo su iOS è necessario stabilire una connessione con il dispositivo ospitante Mac, mediante un tool offerto da Xamarin. Una volta stabilità la connessione è sufficiente avviare il progetto e verrà automaticamente avviato sul Mac in questione
+To be able to emulate the application on iOS it is necessary to establish a connection with the Mac host device, using a tool offered by Xamarin. Once the connection is stable, simply start the project and it will automatically start on the Mac in question.
 
 Python
 
-è necessario scaricare il framework FLASK con le relative estensioni presenti sul sito ufficiale. Tramite il terminale è sufficiente digitare le seguenti righe:
+it is necessary to download the FLASK framework with the related extensions on the official website. Through the terminal it is sufficient to enter the following lines:
 "set FLASK_APP=server_connection.py" -> "flask run"
- A questo punto il server sarà in ascolto sull'indirizzo definito all'interno del codice sorgente.
+ At this point the server will listen at the address defined in the source code.
