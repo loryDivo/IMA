@@ -1,5 +1,5 @@
 # IMA (Image Management Application)
-Cross-platform application dedicated to the management of digital images
+Cross-platform application dedicated to the management of digital images. With this application you can load an image from the gallery, select multiple parts of it by entering the bounding box, send the image to the compressed server with the coordinates. the server will decompress the image and will be able to identify the image parts bounded by the bounding box
 
 IDE used: Visual Studio 2015 / 2017
 
